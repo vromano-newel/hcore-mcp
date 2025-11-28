@@ -1,0 +1,823 @@
+{
+	"info": {
+		"_postman_id": "08108565-3e7e-48ef-aebe-2eb449d07ba1",
+		"name": "cms.hcore.app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8555105",
+		"_collection_link": "https://hcoreapp.postman.co/workspace/Hcore~e6e4f384-2a03-401d-a43a-8ac073d11a12/collection/4359626-08108565-3e7e-48ef-aebe-2eb449d07ba1?action=share&source=collection_link&creator=8555105"
+	},
+	"item": [
+		{
+			"name": "Discover",
+			"item": [
+				{
+					"name": "/discover",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/discover",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"discover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/version",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"version"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schema",
+			"item": [
+				{
+					"name": "/schema/{name}/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.category);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test123\",\r\n    \"duration\" : 2122121,\r\n    \"energy_level\" : 1,\r\n    \"diets\" : \"sasasa\",\r\n    \"preparation_time\" : 10,\r\n    \"key_ingredient\" : 2121\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/{{schema_name}}/create",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"{{schema_name}}",
+								"create"
+							],
+							"query": [
+								{
+									"key": "view",
+									"value": "default",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/struct",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.category);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][gt]",
+									"value": "1599476147",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/struct?schema={{schema_name}}",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"struct"
+							],
+							"query": [
+								{
+									"key": "schema",
+									"value": "{{schema_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.category);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/{{schema_name}}/{{identifier}}/info",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"{{schema_name}}",
+								"{{identifier}}",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/daily_tips_general/search",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"daily_tips_general",
+								"search"
+							],
+							"query": [
+								{
+									"key": "search[created_at][gt]",
+									"value": "1599476147",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "search[code]",
+									"value": "dt01",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/dump",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/{{schema_name}}/dump",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"{{schema_name}}",
+								"dump"
+							],
+							"query": [
+								{
+									"key": "view",
+									"value": "default",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test22\",\r\n    \"category\" : 12121,\r\n    \"duration\" : 2122121,\r\n    \"energy_level\" : 1,\r\n    \"diets\" : \"sasasa\",\r\n    \"preparation_time\" : 10,\r\n    \"key_ingredient\" : 2121\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/{{schema_name}}/update?identifier={{identifier}}",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"{{schema_name}}",
+								"update"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{identifier}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/schema/{name}/delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search[created_at][gt]",
+									"value": "1599476147",
+									"type": "text"
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/schema/{{schema_name}}/delete?identifier={{identifier}}",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"schema",
+								"{{schema_name}}",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{identifier}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "/tag/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][gt]",
+									"value": "1599476147",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/tag/search",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"tag",
+								"search"
+							],
+							"query": [
+								{
+									"key": "view",
+									"value": "default",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tag/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.category);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host_cms}}{{api_path}}/cms/tag/create?tag={{$randomNoun}}&category={{$randomNoun}}&desc={{$randomCatchPhraseNoun}}",
+							"host": [
+								"{{host_cms}}{{api_path}}"
+							],
+							"path": [
+								"cms",
+								"tag",
+								"create"
+							],
+							"query": [
+								{
+									"key": "tag",
+									"value": "{{$randomNoun}}"
+								},
+								{
+									"key": "category",
+									"value": "{{$randomNoun}}"
+								},
+								{
+									"key": "desc",
+									"value": "{{$randomCatchPhraseNoun}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,1189 @@
+{
+	"info": {
+		"_postman_id": "74696aff-f59f-483d-aa0e-d509d48c502e",
+		"name": "pjbuilder.hcore.app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8555105",
+		"_collection_link": "https://hcoreapp.postman.co/workspace/Hcore~e6e4f384-2a03-401d-a43a-8ac073d11a12/collection/4359626-74696aff-f59f-483d-aa0e-d509d48c502e?action=share&source=collection_link&creator=8555105"
+	},
+	"item": [
+		{
+			"name": "Discover",
+			"item": [
+				{
+					"name": "/discover",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/discover",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"discover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/version",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"version"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Program",
+			"item": [
+				{
+					"name": "/pjbuilder/program/list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_code\", jsonResponse.data[0].code);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/list",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{identifier}/start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data.identifier);\r",
+									"    pm.environment.set(\"increment_id\", jsonResponse.data.increment_id);\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.session_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "code",
+									"value": "{{program_code}}",
+									"type": "text"
+								},
+								{
+									"key": "stage",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/start",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{identifier}/shift",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/shift?identifier={{program_id}}&days=-1",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"shift"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{program_id}}"
+								},
+								{
+									"key": "days",
+									"value": "-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data[0].identifier);\r",
+									"    pm.environment.set(\"increment_id\", jsonResponse.data[0].increment_id);\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data[0].session_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[status]",
+									"value": "in progress",
+									"type": "text"
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[status]",
+									"value": "desc",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "target",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/search",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{identifier}/info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data.identifier);\r",
+									"    pm.environment.set(\"increment_id\", jsonResponse.data.increment_id);\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.session_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/info?identifier={{program_id}}",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"info"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{program_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{identifier}/detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data.identifier);\r",
+									"    pm.environment.set(\"increment_id\", jsonResponse.data.increment_id);\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.session_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/detail?identifier={{program_id}}",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{program_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{{identifier}}/reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data.identifier);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "{{program_id}}",
+									"type": "text"
+								},
+								{
+									"key": "stage",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/reset",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/program/{{identifier}}/stop",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/program/stop?identifier={{program_id}}",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"program",
+								"stop"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{program_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "/pjbuilder/session/activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0 && jsonResponse.data.identifier)  {\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.identifier);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/session/{{session_id}}/activities",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"session",
+								"{{session_id}}",
+								"activities"
+							],
+							"query": [
+								{
+									"key": "session_next",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/session/results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.response);\r",
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0 && jsonResponse.data.next != null) {\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.next);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "{{session_id}}",
+									"type": "text"
+								},
+								{
+									"key": "score[0]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "score[1]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "session_next",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/session/results",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"session",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/session/skip",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.response);\r",
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0 && jsonResponse.data.next != null) {\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.next);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/session/skip?identifier={{session_id}}",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"session",
+								"skip"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{session_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Increment",
+			"item": [
+				{
+					"name": "/pjbuilder/increment/{identifier}/summary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"next\", jsonResponse.data.next);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/increment/{{increment_id}}/summary",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"increment",
+								"{{increment_id}}",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/increment/{identifier}/evaluate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "next",
+									"value": "{{next}}",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "score[0]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "score[1]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/increment/{{increment_id}}/evaluate",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"increment",
+								"{{increment_id}}",
+								"evaluate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/pjbuilder/increment/{identifier}/reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"if(jsonResponse.status == 0) {\r",
+									"    pm.environment.set(\"program_id\", jsonResponse.data.identifier);\r",
+									"    pm.environment.set(\"increment_id\", jsonResponse.data.increment_id);\r",
+									"    pm.environment.set(\"session_id\", jsonResponse.data.session_id);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "start_date",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/increment/{{increment_id}}/reset",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"increment",
+								"{{increment_id}}",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "/pjbuilder/user/filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{notifier-apiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_pjbuilder}}{{api_path}}/pjbuilder/user/filter?program_code=amicomed_lifestyle",
+							"host": [
+								"{{host_pjbuilder}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"user",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "program_status",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "increment_stage",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "increment_since_from",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "increment_since_to",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "session_step",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "session_since_from",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "session_since_to",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "program_code",
+									"value": "amicomed_lifestyle"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

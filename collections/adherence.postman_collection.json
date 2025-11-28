@@ -1,0 +1,4932 @@
+{
+	"info": {
+		"_postman_id": "5f40dc66-66c6-4b55-bb4b-b17b7af93b3a",
+		"name": "adherence.hcore.app flow test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8555105",
+		"_collection_link": "https://hcoreapp.postman.co/workspace/Hcore~e6e4f384-2a03-401d-a43a-8ac073d11a12/collection/8555105-5f40dc66-66c6-4b55-bb4b-b17b7af93b3a?action=share&source=collection_link&creator=8555105"
+	},
+	"item": [
+		{
+			"name": "Manufacturer",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/manufacturer/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[identifier]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/manufacturer/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"manufacturer",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/manufacturer/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/manufacturer/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"manufacturer",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Active Ingredient",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/active_ingredient/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "search[created_at][gt]",
+									"value": "1599476147",
+									"type": "text"
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/active_ingredient/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"active_ingredient",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/active_ingredient/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/active_ingredient/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"active_ingredient",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/active_ingredient/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/active_ingredient/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"active_ingredient",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text"
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Request",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_request/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"bounds_period_start\": 0,\r\n    \"duration\": 0,\r\n    \"created_at\": 0,\r\n    \"offset\": 0,\r\n    \"bounds_range_max\": 0,\r\n    \"frequency\": 0,\r\n    \"status\": 1,\r\n    \"count\": 0,\r\n    \"authorized_on\": 1673624206,\r\n    \"isScheduled\": 1,\r\n    \"identifier\": \"1605a3e8-d3d6-4939-979a-156451578c99\",\r\n    \"period_max\": 0,\r\n    \"local_identifier\": \"F7F7EF94-DFB0-4C62-B465-7B1405EE5CF5_1673621000\",\r\n    \"dosage_instructions\": \"0,25mg\",\r\n    \"medication\": {\r\n      \"identifier\": \"56e77488-bcec-453c-97e9-539fe97914ec\",\r\n      \"isDraft\": 1,\r\n      \"manufacturer\": {\r\n        \"identifier\": \"1572633c-e9e6-4449-8f70-be06213d86b3\",\r\n        \"info\": \"Dopamine agonist\",\r\n        \"name\": \"Adartrel\",\r\n        \"isDraft\": 1,\r\n        \"local_identifier\": \"A82B3E3D-16BA-4ECD-BD9A-1A897526AE37_1673611503\"\r\n      },\r\n      \"amount\": \"0,25mg;0,5mg;2mg\",\r\n      \"name\": \"Adartrel\",\r\n      \"local_identifier\": \"C74B2B3D-CA99-46C3-A99E-3E152A85DDF4_1673611503\",\r\n      \"activeIngredient\": {\r\n        \"info\": \"Dopamine agonist\",\r\n        \"local_identifier\": \"A82B3E3D-16BA-4ECD-BD9A-1A897526AE37_1673611503\",\r\n        \"identifier\": \"1572633c-e9e6-4449-8f70-be06213d86b3\",\r\n        \"name\": \"Adartrel\",\r\n        \"isDraft\": 1\r\n      },\r\n      \"code\": \"7331\",\r\n      \"form\": \"Tablet\",\r\n      \"quantity\": 0,\r\n      \"status\": 1\r\n    },\r\n    \"bounds_range_min\": 0,\r\n    \"custom1\": \"Tablet\",\r\n    \"bounds_duration\": 0,\r\n    \"frequency_max\": 0,\r\n    \"dosage_quantity\": 1,\r\n    \"scheduled_at\": 36000000,\r\n    \"duration_max\": 0,\r\n    \"updated_at\": 0,\r\n    \"when\": \"10|01\",\r\n    \"isDraft\": 1,\r\n    \"therapy\": {\r\n      \"identifier\": \"657d54ea-b5a8-4d2b-8cc8-8d57ab562bb6\",\r\n      \"isDraft\": 1,\r\n      \"local_identifier\": \"6AFD22E8-6B76-4F70-A6C3-90B933731561_1673611503\",\r\n      \"name\": \"therapy\"\r\n    },\r\n    \"bounds_period_end\": 0,\r\n    \"period\": 0,\r\n    \"day_of_week\": \"sun|mon|tue|wed|thu|fri|sat\",\r\n    \"count_max\": 0\r\n  }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_request/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_request/advanced_search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/advanced_search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"advanced_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_request/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_request/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"last_app_sync\" : {{$timestamp}},\r\n\"data\" : \r\n[\r\n  {\r\n    \"bounds_period_start\": 0,\r\n    \"duration\": 0,\r\n    \"created_at\": 0,\r\n    \"offset\": 0,\r\n    \"bounds_range_max\": 0,\r\n    \"frequency\": 0,\r\n    \"status\": 1,\r\n    \"count\": 0,\r\n    \"authorized_on\": 1673624206,\r\n    \"isScheduled\": 1,\r\n    \"period_max\": 0,\r\n    \"local_identifier\": \"F7F7EF94-DFB0-4C62-B465-7B1405EE5CF5_1673621000\",\r\n    \"dosage_instructions\": \"0,25mg\",\r\n    \"bounds_range_min\": 0,\r\n    \"custom1\": \"Tablet\",\r\n    \"bounds_duration\": 0,\r\n    \"frequency_max\": 0,\r\n    \"dosage_quantity\": 1,\r\n    \"scheduled_at\": 36000000,\r\n    \"duration_max\": 0,\r\n    \"updated_at\": 0,\r\n    \"when\": \"10|01\",\r\n    \"bounds_period_end\": 0,\r\n    \"period\": 0,\r\n    \"day_of_week\": \"sun|mon|tue|wed|thu|fri|sat\",\r\n    \"count_max\": 0\r\n  },\r\n    {\r\n    \"bounds_period_start\": 0,\r\n    \"duration\": 0,\r\n    \"created_at\": 0,\r\n    \"offset\": 0,\r\n    \"bounds_range_max\": 0,\r\n    \"frequency\": 0,\r\n    \"status\": 1,\r\n    \"count\": 0,\r\n    \"authorized_on\": 1673624207,\r\n    \"isScheduled\": 1,\r\n    \"period_max\": 0,\r\n    \"local_identifier\": \"F7F7EF94-DFB0-4C62-B465-7B1405EE5CF5_1673621000\",\r\n    \"dosage_instructions\": \"0,25mg\",\r\n    \"bounds_range_min\": 0,\r\n    \"custom1\": \"Tablet\",\r\n    \"bounds_duration\": 0,\r\n    \"frequency_max\": 0,\r\n    \"dosage_quantity\": 1,\r\n    \"scheduled_at\": 36000000,\r\n    \"duration_max\": 0,\r\n    \"updated_at\": 0,\r\n    \"when\": \"10|01\",\r\n    \"bounds_period_end\": 0,\r\n    \"period\": 0,\r\n    \"day_of_week\": \"sun|mon|tue|wed|thu|fri|sat\",\r\n    \"count_max\": 0\r\n  }\r\n]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_request/group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{physician_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "period_days",
+									"value": "14",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "period_end_date",
+									"value": "{{current_timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tolerance",
+									"value": "30",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "uuid",
+									"value": "{{patient_uuid}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_request/group",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_request",
+								"group"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Administration",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_administration/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"local_identifier\": \"b7a186d3-4846-4566-bbc3-fe57c39b4be9-1693864800-2-10-55\",\r\n    \"identifier\": null,\r\n    \"status\": 3,\r\n    \"effective_datetime\": 1693904100,\r\n    \"effective_period_start\": null,\r\n    \"effective_period_end\": null,\r\n    \"performer\": null,\r\n    \"request\": null,\r\n    \"note\": null,\r\n    \"patient_instructions\": \"2mg\",\r\n    \"dosage_site\": null,\r\n    \"dosage_route\": null,\r\n    \"dosage_method\": null,\r\n    \"dosage_quantity\": 1,\r\n    \"bounds_duration\": null,\r\n    \"bounds_range_min\": null,\r\n    \"bounds_range_max\": null,\r\n    \"bounds_period_start\": null,\r\n    \"bounds_period_end\": null,\r\n    \"count\": null,\r\n    \"count_max\": null,\r\n    \"duration\": null,\r\n    \"duration_max\": null,\r\n    \"frequency\": null,\r\n    \"frequency_max\": null,\r\n    \"period\": null,\r\n    \"period_max\": null,\r\n    \"period_unit\": null,\r\n    \"day_of_week\": \"tue\",\r\n    \"time_of_day\": null,\r\n    \"offset\": null,\r\n    \"scheduled_at\": null,\r\n    \"custom1\": null,\r\n    \"custom2\": null,\r\n    \"custom3\": null,\r\n    \"when\": \"10|55\",\r\n    \"medication_request\": {\r\n      \"local_identifier\": \"49f72f30-4bc9-11ee-b7af-9b4e39141b88\",\r\n      \"identifier\": \"b7a186d3-4846-4566-bbc3-fe57c39b4be9\",\r\n      \"status\": 1,\r\n      \"encounter_id\": null,\r\n      \"requester\": null,\r\n      \"note\": null,\r\n      \"dosage_instructions\": \"NON DEVE MODIFICARLO E NON DEVE ESSERE PRESENTE QUESTO MESSAGGIO NELLA RESPONSE 2mg\",\r\n      \"patient_instructions\": null,\r\n      \"dosage_site\": null,\r\n      \"dosage_route\": null,\r\n      \"dosage_method\": null,\r\n      \"dosage_quantity\": 1,\r\n      \"bounds_duration\": null,\r\n      \"bounds_range_min\": null,\r\n      \"bounds_range_max\": null,\r\n      \"bounds_period_start\": 1693390000,\r\n      \"bounds_period_end\": 1693390000,\r\n      \"count\": null,\r\n      \"count_max\": null,\r\n      \"duration\": null,\r\n      \"duration_max\": null,\r\n      \"frequency\": null,\r\n      \"frequency_max\": null,\r\n      \"period\": null,\r\n      \"period_max\": null,\r\n      \"period_unit\": null,\r\n      \"day_of_week\": \"sun|mon|tue|wed|thu|fri|sat\",\r\n      \"time_of_day\": null,\r\n      \"offset\": null,\r\n      \"authorized_on\": 1693388113,\r\n      \"custom1\": \"Compressa\",\r\n      \"custom2\": null,\r\n      \"custom3\": null,\r\n      \"notification_id\": 1744004712,\r\n      \"when\": \"09|00\",\r\n      \"medication\": {\r\n        \"local_identifier\": null,\r\n        \"identifier\": \"f879018d-30d1-47e1-ad0d-dddbaa63fab6\",\r\n        \"name\": \"Akineton\",\r\n        \"code\": \"47992\",\r\n        \"status\": 0,\r\n        \"form\": \"Tablet\",\r\n        \"amount\": \"NON DEVE MODIFICARLO E NON DEVE ESSERE PRESENTE QUESTO MESSAGGIO NELLA RESPONSE 2mg\",\r\n        \"locale\": \"IT\",\r\n        \"quantity\": 0,\r\n        \"created_at\": null,\r\n        \"updated_at\": 1681971355,\r\n        \"deleted\": 0,\r\n        \"custom1\": null,\r\n        \"custom2\": null,\r\n        \"custom3\": null,\r\n        \"active_ingredient\": {\r\n            \"identifier\": \"af29fb4b-1269-4734-b722-0ed418b98243\"\r\n        }\r\n      },\r\n      \"therapy\": {\r\n        \"local_identifier\": null,\r\n        \"identifier\": \"074111ba-0b19-4955-8358-c5fb4dc14cc7\",\r\n        \"name\": \"New therapy\",\r\n        \"info\": null\r\n      }\r\n    }\r\n  }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_administration/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_administration",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_administration/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_administration/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_administration",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_administration/advanced_search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[medication_request.status]",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "search[status]",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_administration/advanced_search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_administration",
+								"advanced_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_administration/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_administration/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_administration",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_administration/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_administration/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_administration",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Therapy",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/therapy/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n    \"local_identifier\" : 232321312,\r\n    \"name\" : \"update\",\r\n    \"info\" : \"333333333333\"\r\n    },\r\n    {\r\n    \"local_identifier\" : \"23132131\",\r\n    \"name\" : \"sasasas\",\r\n    \"info\" : \"333333333333\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/therapy/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"therapy",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/therapy/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/therapy/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"therapy",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/therapy/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/therapy/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"therapy",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/therapy/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/therapy/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"therapy",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Preference",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_preference/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"custom_1\" : \"custom_1_test\",             \r\n        \"custom_2\" : \"custom_2_test\",\r\n          \"medication\" : {\r\n                \"local_id\" : \"123456\",\r\n                \"status\" : \"1\"                               \r\n        }\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_preference/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_preference",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_preference/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_preference/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_preference",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_preference/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_preference/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_preference",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_preference/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_preference/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_preference",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/device/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\" : \"test\",                      \r\n        \"info\" : \"description\"\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/device/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"device",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/device/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text"
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/device/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"device",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/device/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/device/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"device",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/device/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/device/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"device",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Dispense",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_dispense/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"status\" : \"1\",      \r\n        \"category\" : \"test\",   \t\t          \r\n        \"performer\" : \"performer_test\",\r\n        \"location\" : \"321312\",\r\n        \"authorizing_prescription\" : \"authorizing_prescription_test\",\r\n        \"quantity\" : 10,\r\n        \"days_supply\" : 1,\r\n        \"was_substituted\" : false,\r\n        \"substituted_reason\" : \"substituted_reason_test\",\r\n        \"medication\" : {\r\n                \"identifier\": \"2f03120b-fff2-4ac4-86c5-0aa35928386f\",\r\n                \"local_id\" : \"123456\",\r\n                \"status\" : \"32\"\r\n        },\r\n        \"medication_request\" : {          \r\n            \"local_id\" : 232321312,\r\n            \"status\" : \"1\",                      \r\n            \"medication_id\" : \"1\",             \r\n            \"encounter_id\" : \"1\",\r\n            \"authorized_on\" : \"321312\",\r\n            \"requester\" : \"21212121-b3d4-4298-abb0-6c4003558afa\",\r\n            \"note\" : \"test\",\r\n            \"dosage_instruction\" : \"test\",\r\n            \"e_prescription_id\" : \"1\",\r\n            \"therapy_id\" : \"1\",  \r\n            \"instruction\" : \"test\",\r\n            \"dosage_site\" : \"test\",\r\n            \"dosage_route\" : \"test\", \r\n            \"dosage_method\" : \"test\",\r\n            \"bounds_duration\" : \"test\",\r\n            \"bounds_range_min\" : \"test\",\r\n            \"bounds_range_max\" : \"test\",\r\n            \"bounds_period_start\" : \"321312\",\r\n            \"bounds_period_end\" : \"321312\",\r\n            \"count\" : \"test\",\r\n            \"count_max\" : \"test\",\r\n            \"duration\" : \"test\",\r\n            \"duration_max\" : \"test\",\r\n            \"frequency\" : \"1\",\r\n            \"frequency_max\" : \"1\"\r\n        }\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_dispense/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_dispense",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_dispense/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_dispense/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_dispense",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_dispense/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_dispense/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_dispense",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_dispense/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_dispense/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_dispense",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Inventory",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_inventory/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\" : \"name_test\",       \r\n        \"medication_id\" : 111,   \r\n        \"manufacturer_id\" : 2222,\t\t\t\t\r\n        \"current_amount\" : 1111,             \r\n        \"amount\" : 2222,\r\n        \"lot_number\" : 3333,\r\n        \"expiration_date\" : \"12345678\",\r\n        \"medication\" : {\r\n                \"local_identifier\" : \"123456\",\r\n                \"status\" : \"1\"\r\n        },\r\n        \"manufacturer\" : {\r\n            \"name\" : \"test\",                      \r\n            \"info\" : \"description\"\r\n        } \r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_inventory/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_inventory",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_inventory/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_inventory/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_inventory",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_inventory/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_inventory/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_inventory",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_inventory/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_inventory/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_inventory",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication Statement",
+			"item": [
+				{
+					"name": "_setup",
+					"item": [
+						{
+							"name": "/auth/token/password (patient)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"patient_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"patient_refresh-userToken\", jsonResponse.data.refresh);\r",
+											"pm.environment.set(\"tmp-userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(\"tmp-refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{patient_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{patient_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/token/password (physician)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"let role = \"physician\";\r",
+											"pm.environment.set(role + \"_userToken\", jsonResponse.data.token);\r",
+											"pm.environment.set(role + \"_refresh-userToken\", jsonResponse.data.refresh);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{app-client-id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "{{physician_username}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "{{physician_password}}",
+											"type": "text"
+										},
+										{
+											"key": "scopes",
+											"value": "{{client-register-scopes}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_auth}}{{api_path}}/auth2/token/password",
+									"host": [
+										"{{host_auth}}{{api_path}}"
+									],
+									"path": [
+										"auth2",
+										"token",
+										"password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "/adherence/medication_statement/write",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "       [ {\r\n            \"status\": 1,\r\n            \"effective_datetime\": 1665083816,\r\n            \"effective_period_start\": 0,\r\n            \"effective_period_end\": 0,\r\n            \"information_source\": null,\r\n            \"note\": \"\",\r\n            \"patient_instructions\": \"12,5mg/50mg\",\r\n            \"dosage_site\": \"\",\r\n            \"dosage_route\": \"\",\r\n            \"dosage_method\": \"\",\r\n            \"dosage_quantity\": 1.5,\r\n            \"bounds_duration\": 0,\r\n            \"bounds_range_min\": 0,\r\n            \"bounds_range_max\": 0,\r\n            \"bounds_period_start\": 1665080000,\r\n            \"bounds_period_end\": 1665080000,\r\n            \"count\": 0,\r\n            \"count_max\": 0,\r\n            \"duration\": 0,\r\n            \"duration_max\": 0,\r\n            \"frequency\": 0,\r\n            \"frequency_max\": 0,\r\n            \"period\": 0,\r\n            \"period_max\": 0,\r\n            \"period_unit\": \"0\",\r\n            \"day_of_week\": \"\",\r\n            \"time_of_day\": \"\",\r\n            \"when\": \"21|16\",\r\n            \"offset\": 0,\r\n            \"custom1\": null,\r\n            \"custom2\": null,\r\n            \"custom3\": null,\r\n            \"created_at\": 1665137549,\r\n            \"updated_at\": null,\r\n            \"deleted\": 0,\r\n            \"medication\": {\r\n                \"code\": \"90758\",\r\n                \"name\": \"Carbidopa + Levodopa\",\r\n                \"status\": 1,\r\n                \"form\": \"Tablet\",\r\n                \"quantity\": 0,\r\n                \"amount\": \"10mg/100mg;12,5mg/50mg;25mg/250mg\",\r\n                \"locale\": \"IT\",\r\n                \"created_at\": null,\r\n                \"updated_at\": 1665137549,\r\n                \"deleted\": 0,\r\n                \"custom1\": null,\r\n                \"custom2\": null,\r\n                \"custom3\": null\r\n            }\r\n        }]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_statement/write",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_statement",
+								"write"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_statement/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_statement/search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_statement",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_statement/advanced_search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search[deleted]",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[created_at][lt]",
+									"value": "{{$timestamp}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_statement/advanced_search",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_statement",
+								"advanced_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_statement/delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifier",
+									"value": "[\"{{identifier}}\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_statement/delete",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_statement",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/adherence/medication_statement/sync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"last_app_sync\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_adherence}}{{api_path}}/adherence/medication_statement/sync",
+							"host": [
+								"{{host_adherence}}{{api_path}}"
+							],
+							"path": [
+								"adherence",
+								"medication_statement",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

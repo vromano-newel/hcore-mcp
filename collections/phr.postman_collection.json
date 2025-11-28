@@ -1,0 +1,3351 @@
+{
+	"info": {
+		"_postman_id": "f42afc9e-f868-4317-8483-8def80e9a342",
+		"name": "phr.hcore.app",
+		"description": "This collection of tests are related to the PHR module. The set of tests are used for Functional Requirements validation.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8555105",
+		"_collection_link": "https://hcoreapp.postman.co/workspace/Hcore~e6e4f384-2a03-401d-a43a-8ac073d11a12/collection/8555105-f42afc9e-f868-4317-8483-8def80e9a342?action=share&source=collection_link&creator=8555105"
+	},
+	"item": [
+		{
+			"name": "Discover",
+			"item": [
+				{
+					"name": "/discover",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/discover",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"discover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be in the correct format\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/version",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"version"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ciao ciao ciao"
+		},
+		{
+			"name": "Content",
+			"item": [
+				{
+					"name": "Content System fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testArrayGlobal(jsonResponse, 1, 5);\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagement.testContentMandatory(jsonResponse, [0,1,2,3]);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testResponseObject();\r",
+									"raManagement.testIdentifierNotFound(jsonResponse, [4]);\r",
+									"\r",
+									"pm.environment.set(\"content_identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"pm.environment.set(\"content_id\", jsonResponse.data.success[0].uid);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    },\r\n    {\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n         \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    },\r\n    {\r\n        \"identifier\": \"miao\",\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n         \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"day\": 16,\r\n        \"week\": 38,\r\n        \"month\": 9,\r\n        \"year\": 2019,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null,\r\n        \"date\": 1568639047\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"save"
+							]
+						},
+						"description": "This test are used for the **content system fields** functional requirements validation.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the insertion functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n1. The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n2. Collections of errors and successes are of the expected size\n3. Mandatory Fields are present in response\n4. Entries with mandatory fields not entered are signalled with an error\n5. Entry with not valid identifier is reported as error"
+					},
+					"response": []
+				},
+				{
+					"name": "Content Mandatory fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testArrayGlobal(jsonResponse, 1, 5);\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagement.testContentMandatory(jsonResponse, [0,1,2,3]);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testResponseObject();\r",
+									"raManagement.testIdentifierNotFound(jsonResponse, [4]);\r",
+									"\r",
+									"pm.environment.set(\"content_identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"pm.environment.set(\"content_id\", jsonResponse.data.success[0].uid);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"category\": \"measurements\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"uid\" : \"{{$randomLoremSlug}}\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n         \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"identifier\": \"miao\",\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"locale\": \"en-GB\",\r\n         \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"save"
+							]
+						},
+						"description": "StartFragment\n\nThis test are used for the **content mandatory fields** functional requirements validation.\n\nEndFragm\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the insertion functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n1. The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n2. Collections of errors and successes are of the expected size\n3. Mandatory Fields are present in response\n4. Entries with mandatory fields not entered are signalled with an error\n5. Entry with not valid identifier is reported as error"
+					},
+					"response": []
+				},
+				{
+					"name": "Content Update Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testArrayGlobal(jsonResponse, 1, 0);\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagement.testContentMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"\r",
+									"pm.environment.set(\"content_identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"pm.environment.set(\"content_id\", jsonResponse.data.success[0].uid);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"locale\": \"en-GB\",\r\n        \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    }\r\n    \r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"save"
+							]
+						},
+						"description": "The test Content Update field test is used for validation of the update functionalities. It verify if the presence of the identifier is used for determinate how functionality must be used, in this case update functionality.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Content Locale Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagement.testContentMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"raManagement.testLocale(jsonResponse, jsonRequest);\r",
+									"\r",
+									"pm.environment.set(\"content_identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"pm.environment.set(\"content_id\", jsonResponse.data.success[0].uid);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"identifier\": \"{{content_identifier}}\",\r\n        \"locale\": \"en-GB\",\r\n        \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",\r\n        \"identifier\": \"{{content_identifier}}\",\r\n        \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": true,\r\n        \"is_enabled\": true,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"save"
+							]
+						},
+						"description": "This test is used for Locale functional requirements validation.\n\nVerification of format and default behaviour.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Content Visible and Enable Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"raManagement.testEnabledVisible(jsonResponse, jsonRequest);\r",
+									"\r",
+									"pm.environment.set(\"content_identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"pm.environment.set(\"content_id\", jsonResponse.data.success[0].uid);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",        \r\n        \"locale\": \"en-GB\",\r\n        \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_visible\": false,\r\n        \"is_enabled\": false,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    },\r\n    {\r\n        \"title\": \"{{$randomFirstName}}\",        \r\n        \"locale\": \"en-GB\",\r\n        \"category\": \"measurements\",\r\n        \"friendly\": \"measurements\",\r\n        \"type\": \"health_state\",\r\n        \"subtype\": null,\r\n        \"sort_index\": 0,\r\n        \"is_deleted\": false,\r\n        \"flags\": 0,\r\n        \"local_identifier\": \"local_identifier\",\r\n        \"parent_id\": null,\r\n        \"ancestor_id\": null,\r\n        \"group_id\": null,\r\n        \"external_id\": null,\r\n        \"create_time\": null,\r\n        \"update_time\": null,\r\n        \"delete_time\": null,\r\n        \"value\": 178,\r\n        \"last\": null,\r\n        \"max\": null,\r\n        \"average\": null,\r\n        \"count\": null,\r\n        \"trend\": null,\r\n        \"unit\": \"cm\",\r\n        \"interval\": null\r\n    }    \r\n    \r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"save"
+							]
+						},
+						"description": "This test is used for **visible and enable functional requirement verification**.\n\nIf visible or enable is not set or set to true, the response inherent values must be set to true.\n\nIf set to false, the response inherent values must be set to false.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Content Read Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"//let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"//raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testContentMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/{{content_identifier}}/info",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"{{content_identifier}}",
+								"info"
+							]
+						},
+						"description": "This test verify read functional requirements.\n\nThis api is used for the finding of the element via identification.\n\nThis test verify if the insertion is corrected and all the mandatory field are setted."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Read Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/info?identifier={{content_identifier}}",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"info"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{content_identifier}}"
+								}
+							]
+						},
+						"description": "This test verify read functional requirements.\n\nThis api is used for the finding of the element via identification.\n\nThis test verify if the insertion is corrected and all the mandatory field are setted."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Search Test (array)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "measurements",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[locale]",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/{{category}}/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"{{category}}",
+								"search"
+							]
+						},
+						"description": "This test verify search functional requirements."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Search Test (json)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{editor_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "surveys",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "{\"identifier\":\"{{content_identifier}}\", \"locale\":\"it\"}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "model",
+									"value": "survey_template",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"search"
+							]
+						},
+						"description": "This test verify search functional requirements."
+					},
+					"response": []
+				}
+			],
+			"description": "The Content Tests collection are used for the Content Functional Requirements validation."
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "Item Insertion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagementItem.testUpdate(jsonResponse);\r",
+									"raManagement.testLocalIdentifier(jsonResponse);\r",
+									"raManagement.testArrayGlobal(jsonResponse, 2, 0);\r",
+									"raManagement.testIdentifierNotFound(jsonResponse, [0]);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "The save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item Mandatory fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagementItem.testUpdate(jsonResponse);\r",
+									"raManagement.testLocalIdentifier(jsonResponse);\r",
+									"raManagement.testArrayGlobal(jsonResponse, 2, 0);\r",
+									"raManagement.testIdentifierNotFound(jsonResponse, [0]);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\"\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"identifier\" : \"{{identifier}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\"\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"identifier\" : \"bau\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "The save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item System fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagementItem.testUpdate(jsonResponse);\r",
+									"raManagement.testLocalIdentifier(jsonResponse);\r",
+									"raManagement.testArrayGlobal(jsonResponse, 2, 0);\r",
+									"raManagement.testIdentifierNotFound(jsonResponse, [0]);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\"\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"identifier\" : \"{{identifier}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\"\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"identifier\" : \"bau\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "This test are used for the **item system fields** functional requirements validation.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item Update Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testArrayGlobal(jsonResponse, 1, 0);\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"identifier\" : \"{{identifier}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "The test Item Update field test is used for validation of the update functionalities. It verify if the presence of the identifier is used for determinate how functionality must be used, in this case update functionality.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item Visible and Enable Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"raManagement.testEnabledVisible(jsonResponse, jsonRequest);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\",\r\n        \"is_visible\": false,\r\n        \"is_enabled\": false\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "This test is used for **visible and enable functional requirement verification**.\n\nIf visible or enable is not set or set to true, the response inherent values must be set to true.\n\nIf set to false, the response inherent values must be set to false.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item Date and Timezone Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"raManagement.testLocalIdentifier(jsonResponse, [0]);\r",
+									"raManagementItem.testItemMandatory(jsonResponse);\r",
+									"raManagement.testStatusOk(); \r",
+									"raManagement.testUpdateGlobal(jsonResponse);\r",
+									"raManagement.testDate(jsonResponse, jsonRequest);\r",
+									"\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.success[0].identifier);\r",
+									"pm.environment.set(\"category\", jsonResponse.data.success[0].category);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\",\r\n        \"is_visible\": false,\r\n        \"is_enabled\": false\r\n    },\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\",\r\n        \"owner_id\": \"miao\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "This test is used for Date and Timezone functional requirements validation.\n\nIf date is not specified, all the related field (day, month, etc) and date must be set to 0.\n\nIf date is set (mock date must be specified) all the field must be filled with attendeed values.\n\nTimezone and Timezone_loc must be empty if date is null, otherwise must have attendee value.\n\nThe save api takes an array of elements as input. The same api is used for insertion and update. In this case, the test is focused to the update functionality.  \nBy using this functionality, we are able to perform several tests simultaneously. The following conditions are verified:\n\n- The response consists of a collection of correctly inserted/updated objects (successes) and a collection of objects not inserted with an error (errors).\n- Collections of errors and successes are of the expected size\n- Mandatory Fields are present in response\n- Entries with mandatory fields not entered are signalled with an error\n- Entry with not valid identifier is reported as error\n- Localidentifier is in echo mode\n- If not specified, localidentifier is set to null in response\n- updated_at field is correctly increased"
+					},
+					"response": []
+				},
+				{
+					"name": "Item Read Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/{{identifier}}/info",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"{{identifier}}",
+								"info"
+							]
+						},
+						"description": "This test verify read functional requirements.\n\nThis api is used for the finding of the element via identification.\n\nThis test verify if the insertion is corrected and all the mandatory field are setted."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Read Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/info?identifier={{identifier}}",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"info"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "{{identifier}}"
+								}
+							]
+						},
+						"description": "This test verify read functional requirements.\n\nThis api is used for the finding of the element via identification.\n\nThis test verify if the insertion is corrected and all the mandatory field are setted."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Search Test (array)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "measurements",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[identifier]",
+									"value": "{{identifier}}",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "draw",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "start",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "order[identifier]",
+									"value": "desc",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[identifier]",
+									"value": "f0fb4279-8b38-4fdb-b541-7595fb531944",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[value]",
+									"value": "symptoms",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "search[date][gte]",
+									"value": "1586650029",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/{{category}}/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"{{category}}",
+								"search"
+							]
+						},
+						"description": "This test verify search functional requirements."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Search Test (json)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "{{category}}",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "{\"identifier\":\"{{identifier}}\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"search"
+							]
+						},
+						"description": "This test verify search functional requirements."
+					},
+					"response": []
+				}
+			],
+			"description": "The ItemTests collection are used for the Item Functional Requirements validation.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "sync",
+			"item": [
+				{
+					"name": "Sync Mandatory fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagementItem.testSyncItemMandatory(jsonResponse);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"last_app_sync\": 16639401\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync valid timestamp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagementItem.testSyncItemMandatory(jsonResponse);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": \"fail\",\r\n    \"data\": \"fail\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync valid data array",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagementItem.testSyncItemErrors(jsonResponse);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": 1663940118,\r\n    \"data\": [\r\n        {\r\n            \"category\":\"bp-status\",\r\n            \"type\":\"take_medication\",\r\n            \"subtype\":null,\r\n            \"value\": {{$randomInt}},\r\n            \"parent_id\":null,\r\n            \"ancestor_id\":null,\r\n            \"application_id\":\"dev-app-amicomed-hcore-app\",\r\n            \"external_id\":null,\r\n            \"environment_id\":\"amicomed\",\r\n            \"group_id\":null,\r\n            \"content_id\":null,\r\n            \"sort_index\":0,\r\n            \"create_time\":1663858495,\r\n            \"update_time\":1663940118,\r\n            \"delete_time\":0,\r\n            \"date\":0,\r\n            \"flags\":null,\r\n            \"day\":0,\r\n            \"month\":0,\r\n            \"week\":0,\r\n            \"year\":0,\r\n            \"timezone\":\"\",\r\n            \"timezone_loc\":\"\",\r\n            \"average\":null,\r\n            \"count\":null,\r\n            \"friendly\":null,\r\n            \"force\":false,\r\n            \"interval\":null,\r\n            \"first\":null,\r\n            \"last\":null,\r\n            \"max\":null,\r\n            \"min\":null,\r\n            \"trend\":null,\r\n            \"unit\":null,\r\n            \"is_deleted\":false,\r\n            \"is_enabled\":true,\r\n            \"is_visible\":true,\r\n            \"raw\":null,\r\n            \"version\":1,\r\n            \"status\":0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync insert operation test, Sync valid response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testSyncItemMandatory(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponse(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponseArray(jsonResponse, \"inserted\");\r",
+									"\r",
+									"\r",
+									"let index = jsonResponse.data.inserted.length - 1;\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.inserted[index].identifier);\r",
+									"pm.environment.set(\"last_app_sync\", parseInt(jsonResponse.data.inserted[index].update_time) - 1);\r",
+									"pm.environment.set(\"last_app_sync_plus\", parseInt(jsonResponse.data.inserted[index].update_time) + 1);\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									"\r",
+									"console.log(pm.environment.get(\"last_app_sync\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": 1663859495,\r\n    \"data\": [\r\n        {\r\n            \"local_identifier\":\"4414a3c0-3a88-11ed-8a44-173d43644f42\",\r\n            \"category\":\"bp-status\",\r\n            \"type\":\"take_medication\",\r\n            \"subtype\":null,\r\n            \"value\": {{$randomInt}},\r\n            \"parent_id\":null,\r\n            \"ancestor_id\":null,\r\n            \"application_id\":\"dev-app-amicomed-hcore-app\",\r\n            \"external_id\":null,\r\n            \"environment_id\":\"amicomed\",\r\n            \"group_id\":null,\r\n            \"content_id\":null,\r\n            \"sort_index\":0,\r\n            \"create_time\":1663858495,\r\n            \"update_time\":1663940118,\r\n            \"delete_time\":0,\r\n            \"date\":0,\r\n            \"flags\":null,\r\n            \"day\":0,\r\n            \"month\":0,\r\n            \"week\":0,\r\n            \"year\":0,\r\n            \"timezone\":\"\",\r\n            \"timezone_loc\":\"\",\r\n            \"average\":null,\r\n            \"count\":null,\r\n            \"friendly\":null,\r\n            \"force\":false,\r\n            \"interval\":null,\r\n            \"first\":null,\r\n            \"last\":null,\r\n            \"max\":null,\r\n            \"min\":null,\r\n            \"trend\":null,\r\n            \"unit\":null,\r\n            \"is_deleted\":false,\r\n            \"is_enabled\":true,\r\n            \"is_visible\":true,\r\n            \"raw\":null,\r\n            \"version\":1,\r\n            \"status\":0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync update operation test, Sync valid response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testSyncItemMandatory(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponse(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponseArray(jsonResponse, \"updated\");\r",
+									"\r",
+									"let index = jsonResponse.data.updated.length - 1;\r",
+									"pm.environment.set(\"identifier\", jsonResponse.data.updated[index].identifier);\r",
+									"pm.environment.set(\"last_app_sync\", parseInt(jsonResponse.data.updated[index].update_time) - 1);\r",
+									"pm.environment.set(\"last_app_sync_plus\", parseInt(jsonResponse.data.updated[index].update_time) + 1);\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": {{last_app_sync_plus}},\r\n    \"data\": [\r\n            {\r\n                \"identifier\" :\"{{identifier}}\",\r\n                \"local_identifier\":\"4414a3c0-3a88-11ed-8a44-173d43644f42\",\r\n                \"category\":\"bp-status\",\r\n                \"type\":\"take_medication3\",\r\n                \"subtype\":null,\r\n                \"value\": {{$randomInt}},\r\n                \"parent_id\":null,\r\n                \"ancestor_id\":null,\r\n                \"application_id\":\"dev-app-amicomed-hcore-app\",\r\n                \"external_id\":null,\r\n                \"environment_id\":\"amicomed\",\r\n                \"group_id\":null,\r\n                \"content_id\":null,\r\n                \"sort_index\":0,\r\n                \"create_time\":1663858495,\r\n                \"update_time\":1663940118,\r\n                \"delete_time\":0,\r\n                \"date\":0,\r\n                \"flags\":null,\r\n                \"day\":0,\r\n                \"month\":0,\r\n                \"week\":0,\r\n                \"year\":0,\r\n                \"timezone\":\"\",\r\n                \"timezone_loc\":\"\",\r\n                \"average\":null,\r\n                \"count\":null,\r\n                \"friendly\":null,\r\n                \"force\":false,\r\n                \"interval\":null,\r\n                \"first\":null,\r\n                \"last\":null,\r\n                \"max\":null,\r\n                \"min\":null,\r\n                \"trend\":null,\r\n                \"unit\":null,\r\n                \"is_deleted\":false,\r\n                \"is_enabled\":true,\r\n                \"is_visible\":true,\r\n                \"raw\":null,\r\n                \"version\":1,\r\n                \"status\":0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync delete operation test, Sync valid response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testSyncItemMandatory(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponse(jsonResponse);\r",
+									"raManagementItem.testSyncItemResponseArray(jsonResponse, \"deleted\");\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": {{last_app_sync_plus}},\r\n    \"data\": [\r\n            {\r\n                \"local_identifier\" : \"1235456\",\r\n                \"identifier\" :\"{{identifier}}\",\r\n                \"is_deleted\":true\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync last_app_sync test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"raManagementItem.testSyncItemResponse(jsonResponse);\r",
+									"raManagementItem.testSyncConflicts(jsonResponse);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\":\"demographics,observations,bp-status,bp_target,conditions,sbp_status,dbp_status\",\r\n    \"last_app_sync\": {{last_app_sync}},\r\n    \"data\": [\r\n        {\r\n            \"identifier\" :  \"{{identifier}}\",\r\n            \"local_identifier\":\"4414a3c0-3a88-11ed-8a44-173d43644f42\",\r\n            \"category\":\"bp-status\",\r\n            \"type\":\"take_medication\",\r\n            \"subtype\":null,\r\n            \"value\": {{$randomInt}},\r\n            \"parent_id\":null,\r\n            \"ancestor_id\":null,\r\n            \"application_id\":\"dev-app-amicomed-hcore-app\",\r\n            \"external_id\":null,\r\n            \"environment_id\":\"amicomed\",\r\n            \"group_id\":null,\r\n            \"content_id\":null,\r\n            \"sort_index\":0,\r\n            \"create_time\":1663858495,\r\n            \"update_time\":1663940118,\r\n            \"delete_time\":0,\r\n            \"date\":0,\r\n            \"flags\":null,\r\n            \"day\":0,\r\n            \"month\":0,\r\n            \"week\":0,\r\n            \"year\":0,\r\n            \"timezone\":\"\",\r\n            \"timezone_loc\":\"\",\r\n            \"average\":null,\r\n            \"count\":null,\r\n            \"friendly\":null,\r\n            \"force\":false,\r\n            \"interval\":null,\r\n            \"first\":null,\r\n            \"last\":null,\r\n            \"max\":null,\r\n            \"min\":null,\r\n            \"trend\":null,\r\n            \"unit\":null,\r\n            \"is_deleted\":false,\r\n            \"is_enabled\":true,\r\n            \"is_visible\":true,\r\n            \"raw\":null,\r\n            \"version\":1,\r\n            \"status\":0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/sync",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "Item Delete Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/{{identifier}}/delete",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"{{identifier}}",
+								"delete"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Delete Search (get)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testResponse404(jsonResponse);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/{{identifier}}/info",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"{{identifier}}",
+								"info"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements.\n\nThe object must not retrieved if search is performed because logically deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Delete Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/{{content_identifier}}/delete",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"{{content_identifier}}",
+								"delete"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Delete Test (get)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"//let jsonRequest = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"//raManagement.testInsertGlobal(jsonResponse);\r",
+									"raManagement.testResponse404(jsonResponse);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"name": "Content-Type",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/{{content_identifier}}/info",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"{{content_identifier}}",
+								"info"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements.\n\nThe object must not retrieved if search is performed because logically deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Insert Test in Deleted Content",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"raManagement.testStatusOk();\r",
+									"raManagement.testDeletedNotContent(jsonResponse, [0]);\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "it-IT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"content_id\" : \"{{content_id}}\",\r\n        \"category\": \"item\",\r\n        \"type\": \"personal\",\r\n        \"value\": {{$randomInt}},\r\n        \"subtype\": \"height\",\r\n        \"date\" : 1686650029,\r\n        \"local_identifier\" : \"{{$randomUUID}}\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/save",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"save"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements.\n\nThe object must not be inserted into a Content logically deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Content Search with Content Deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//raManagement.testStatusOk();\r",
+									"raManagement.testDeleteSearch();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "{{category}}",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "{\"identifier\":\"{{content_identifier}}\", \"locale\":\"it\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/content/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"content",
+								"search"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements.\n\nThe object must not retrieved if search is performed because logically deleted."
+					},
+					"response": []
+				},
+				{
+					"name": "Item Search with Item Deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"raManagement.testDeleteSearch();\r",
+									"\r",
+									"pm.globals.set(\"report\", JSON.stringify(report));\r",
+									"pm.globals.set(\"ras\", JSON.stringify(ras));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "category",
+									"value": "{{category}}",
+									"type": "text"
+								},
+								{
+									"key": "search",
+									"value": "{\"identifier\":\"{{identifier}}\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_phr}}{{api_path}}/phr/item/search",
+							"host": [
+								"{{host_phr}}{{api_path}}"
+							],
+							"path": [
+								"phr",
+								"item",
+								"search"
+							]
+						},
+						"description": "This test verify the Delete functionality releted to the Delete fuctional requirements.\n\nThe object must not retrieved if search is performed because logically deleted."
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains all the tests related to the Delete functional requirements."
+		},
+		{
+			"name": "surveys",
+			"item": [
+				{
+					"name": "Template",
+					"item": [
+						{
+							"name": "/survey/template/list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"survey_id\", jsonResponse.data.surveys[0].id);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/list",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"list"
+									],
+									"query": [
+										{
+											"key": "full",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/template/{survey_id}/detail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"survey_raw\", jsonResponse.data);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/{{survey_id}}/detail",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"{{survey_id}}",
+										"detail"
+									],
+									"query": [
+										{
+											"key": "survey_id",
+											"value": "{{survey_id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/template/{survey_id}/start",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/{{survey_id}}/start",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"{{survey_id}}",
+										"start"
+									],
+									"query": [
+										{
+											"key": "survey_id",
+											"value": "{{survey_id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/template/{identifier}/reset",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/{{identifier}}/reset",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"{{identifier}}",
+										"reset"
+									],
+									"query": [
+										{
+											"key": "survey_id",
+											"value": "{{survey_id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/template/{identifier}/finish",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/{{identifier}}/finish",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"{{identifier}}",
+										"finish"
+									],
+									"query": [
+										{
+											"key": "survey_id",
+											"value": "{{survey_id}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/template/search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"identifier\", jsonResponse.data[0].identifier);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/template/search",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"template",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Section",
+					"item": [
+						{
+							"name": "/survey/section/{identifier}/get",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"survey_id\", jsonResponse.data.surveys[0].id);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/section/{{identifier}}/get",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"section",
+										"{{identifier}}",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/survey/section/{identifier}/save",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"survey_id\", jsonResponse.data.surveys[0].id);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "answers",
+											"value": "{\n\t\t\t\t\t\t\"101\": \"0.5\",\n                        \"102\": \"1\",\n                        \"103\": \"2\",\t\t\t\t\n\t\t\t\t\t\t\"3\": \"05-04-1994\",\n                        \"7\": \"1\",\n                        \"16\": \"177\",\n                        \"17\": \"61\",\n\t\t\t\t\t\t \"82\": \"n/a\",\n                        \"18\": \"2\",\n                        \"83\": \"n/a\",\n                        \"19\": \"2\",\n\t\t\t\t\t\t\"26\": \"6\",\n                        \"27\": \"n/a\",\n                        \"28\": \"n/a\",\n                        \"30\": \"n/a\",\n                        \"31\": \"1\",\n                        \"32\": \"n/a\",\n                        \"33\": \"n/a\",\n                        \"34\": \"n/a\",\n                        \"35\": \"n/a\",\n                        \"39\": \"5\",\n\t\t\t\t\t\t \"46\": \"0\",\n                        \"47\": \"n/a\",\n                        \"53\": \"1\",\n                        \"54\": \"1\",\n                        \"55\": \"2\",\n                        \"56\": \"4\",\n                        \"57\": \"3\",\n                        \"58\": \"1\",\n                        \"59\": \"2\",\n\t\t\t\t\t\t                        \"60\": \"2\",\n                        \"61\": \"2\",\n                        \"62\": \"2\",\n                        \"63\": \"2\",\n                        \"64\": \"2\",\n                        \"65\": \"3\",\n                        \"66\": \"2\",\n                        \"67\": \"2\",\n                        \"68\": \"4\",\n\t\t\t\t\t\t \"72\": \"0\",\n                        \"169\": \"1\",\n                        \"69\": [\n                            \"1\"\n                        ],\n\t\t\t\t\t\t  \"70\": [\"30\"],\n                        \"71\": [\"2\"],\n                        \"73\": \"3\"\n\t\t\t\t\t\t}",
+											"description": "{\n\t\t\t\t\t\t\"101\": \"0.5\",\n                        \"102\": \"1\",\n                        \"103\": \"2\",\t\t\t\t\n\t\t\t\t\t\t\"3\": \"05-04-1994\",\n                        \"7\": \"1\",\n                        \"16\": \"177\",\n                        \"17\": \"61\",\n\t\t\t\t\t\t \"82\": \"n/a\",\n                        \"18\": \"2\",\n                        \"83\": \"n/a\",\n                        \"19\": \"2\",\n\t\t\t\t\t\t\"26\": \"6\",\n                        \"27\": \"n/a\",\n                        \"28\": \"n/a\",\n                        \"30\": \"n/a\",\n                        \"31\": \"1\",\n                        \"32\": \"n/a\",\n                        \"33\": \"n/a\",\n                        \"34\": \"n/a\",\n                        \"35\": \"n/a\",\n                        \"39\": \"5\",\n\t\t\t\t\t\t \"46\": \"0\",\n                        \"47\": \"n/a\",\n                        \"53\": \"1\",\n                        \"54\": \"1\",\n                        \"55\": \"2\",\n                        \"56\": \"4\",\n                        \"57\": \"3\",\n                        \"58\": \"1\",\n                        \"59\": \"2\",\n\t\t\t\t\t\t                        \"60\": \"2\",\n                        \"61\": \"2\",\n                        \"62\": \"2\",\n                        \"63\": \"2\",\n                        \"64\": \"2\",\n                        \"65\": \"3\",\n                        \"66\": \"2\",\n                        \"67\": \"2\",\n                        \"68\": \"4\",\n\t\t\t\t\t\t \"72\": \"0\",\n                        \"169\": \"1\",\n                        \"69\": [\n                            \"1\"\n                        ],\n\t\t\t\t\t\t  \"70\": [\"30\"],\n                        \"71\": [\"2\"],\n                        \"73\": \"3\"\n\t\t\t\t\t\t}",
+											"type": "text"
+										},
+										{
+											"key": "date",
+											"value": "{{$timestamp}}",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_phr}}{{api_path}}/survey/section/{{identifier}}/save",
+									"host": [
+										"{{host_phr}}{{api_path}}"
+									],
+									"path": [
+										"survey",
+										"section",
+										"{{identifier}}",
+										"save"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"//TEST INITIALIZE FUNCTIONS ------>",
+					"env = pm.globals;",
+					"report = JSON.parse(env.get(\"report\") || \"{}\");",
+					"ras = {};",
+					"mapping = JSON.parse(env.get(\"mapping\") || \"{}\");",
+					"mappingRa = JSON.parse(env.get(\"mappingRa\") || \"{}\");",
+					"",
+					"const reportReq = (ra, result) => {",
+					"    if(ras[ra.trim()] !== undefined) {",
+					"        ras[ra.trim()].forEach(rfe => {",
+					"            rfs = mapping[apiName()];",
+					"            if(rfs === undefined) {",
+					"                rfs = mapping[\"default\"];",
+					"            }",
+					"            if(rfs.includes(rfe)) {",
+					"                if(report[rfe][apiName()] === undefined) {",
+					"                    report[rfe][apiName()] = {};",
+					"                }",
+					"                if(report[rfe][apiName()][ra] === undefined) {",
+					"                    report[rfe][apiName()][ra] = {};",
+					"                }",
+					"                report[rfe][apiName()][ra] = result;",
+					"            }",
+					"        });",
+					"    }",
+					"};",
+					"",
+					"",
+					"const pmOverride = (testMsg, fun) => {",
+					"    var ra = testMsg.split(\" - \")[0];",
+					"    //todo da finire. non funziona",
+					"    pm.test(testMsg, () => {",
+					"        reportReq(ra, false);",
+					"        fun();",
+					"        reportReq(ra, true);  ",
+					"    });",
+					"};",
+					"",
+					"const initReqs = (reset = false) => {",
+					"",
+					"    for(var spec in mappingRa) {",
+					"        mappingRa[spec].forEach(ra => {",
+					"            const raKey = ra.trim();",
+					"            if (!ras[raKey]) {",
+					"                ras[raKey] = [];",
+					"            }",
+					"            ras[raKey].push(spec);",
+					"",
+					"            if (!report[spec]) {",
+					"                report[spec] = {};",
+					"            }",
+					"            if(reset || !report.hasOwnProperty(spec)) {",
+					"                report[spec][raKey] = null;",
+					"            }",
+					"        });",
+					"    }",
+					"};",
+					"",
+					"printReport = () => {",
+					"    const evaluateArray = (obj) => {",
+					"        const arr = Object.values(obj);",
+					"        if (arr.includes(null)) {",
+					"            result = null;",
+					"        } else if (arr.includes(false)) {",
+					"            result = false;",
+					"        } else {",
+					"            result = arr.includes(true);",
+					"        }",
+					"        return result;",
+					"    }",
+					"}",
+					"",
+					"const apiName = () =>  {",
+					"    var arrayApi = pm.request.url.getPath().split(\"/\");",
+					"    return arrayApi[3] + \"-\" + arrayApi[arrayApi.length-1];",
+					"};",
+					"",
+					"// Chiamata alla funzione alla fine della raccolta ",
+					"if (1 || pm.info.iteration === 0 && Object.keys(report).length === 0) ",
+					"{ ",
+					"    initReqs();",
+					"}",
+					"",
+					"// Chiamata alla funzione alla fine della raccolta ",
+					"if (pm.info.iteration === pm.info.iterationCount - 1) { ",
+					"    printReport();",
+					"}",
+					"",
+					"//<--------------",
+					"",
+					"raManagement = {",
+					"    ",
+					"    testInsertGlobal: function(jr) {",
+					"        pmOverride(\"RA1 - Identifier always present and not could be set out of the system\", function() {",
+					"            jr.data.success.forEach(e => {",
+					"                pm.expect(e.identifier).to.be.ok;",
+					"                pm.expect(e.identifier).not.equal(\"not present\");",
+					"                ",
+					"            });",
+					"        });",
+					"",
+					"        pmOverride(\"RA2 - Values not could be set out of the system\", function() {",
+					"            jr.data.success.forEach(e => {",
+					"                pm.expect(null).to.be.not.equal(e.created_at);",
+					"                pm.expect(null).to.be.not.equal(e.create_time);",
+					"                pm.expect(null).to.be.not.equal(e.update_time);",
+					"                pm.expect(null).to.be.not.equal(e.delete_time);",
+					"                pm.expect(null).to.be.not.equal(e.is_deleted);",
+					"                pm.expect(null).to.be.not.equal(e.identifier);",
+					"                pm.expect(null).to.be.not.equal(e.environment_id);",
+					"                pm.expect(null).to.be.not.equal(e.application_id);",
+					"            });",
+					"        });",
+					"    },",
+					"",
+					"",
+					"",
+					"    testUpdateGlobal: function(jr) {",
+					"        pmOverride(\"RA9 - Updated at always present and not could be set out of the system\", function() {",
+					"            jr.data.success.forEach(e => {",
+					"                pm.expect(null).to.be.not.equal(e.updated_at);",
+					"                pm.expect(e.updated_at).to.be.not.equal(1);",
+					"            });",
+					"        });",
+					"    },",
+					"",
+					"    testArrayGlobal: function(jr, success, error) {",
+					"        pmOverride(\"RA3 - Response has two arrays, one for successes, one for errors\", function() {",
+					"            pmOverride(\"RA3 - Success array lenght is \" + success, function() {",
+					"                pm.expect(success).to.equal(jr.data.success.length);",
+					"            });",
+					"            if(error === 0) {",
+					"                return;",
+					"            }",
+					"",
+					"            pmOverride(\"RA3 - Error array lenght is \" + error, function() {",
+					"                pm.expect(error).to.equal(jr.data.error.length);",
+					"            });",
+					"        });",
+					"    },",
+					"    testArraySearchGlobal: function(jr, success, error) {",
+					"        pmOverride(\"RA30 - Search response\", function() {",
+					"            pmOverride(\"RA30 - Data array lenght is \" + success, function() {",
+					"                pm.expect(success).to.equal(jr.data.length);",
+					"            });",
+					"            if(error === 0) {",
+					"                return;",
+					"            }",
+					"",
+					"            pmOverride(\"RA30 - Error array lenght is \" + error, function() {",
+					"                pm.expect(error).to.equal(jr.data.error.length);",
+					"            });",
+					"        });",
+					"    },",
+					"    testLocalIdentifier: function(jr, elementsEnum) {",
+					"        pmOverride(\"RA4 - Local Identifier is always present and right setted\", function() {",
+					"           jr.data.success.forEach(e => {",
+					"               ",
+					"                if(e.local_identifier === null) {",
+					"                    pm.expect(e.local_identifier).to.be.null;",
+					"                }",
+					"                else if(e.local_identifier === undefined) {",
+					"                                      ",
+					"                }",
+					"                else {",
+					"                    pm.expect(e.local_identifier).to.be.exist;",
+					"                }",
+					"            }); ",
+					"        });",
+					"    },",
+					"",
+					"    testNameMandatory: function(jsonRequest, jr) {",
+					"        let countNoName = 0;",
+					"        jsonRequest.forEach(e => {",
+					"            if(e.name === null || e.name === undefined) {",
+					"                countNoName++;",
+					"            }",
+					"        });",
+					"        pmOverride(\"RA5 - Name is mandatory\", function() {",
+					"            jr.data.success.forEach(e => {",
+					"                pm.expect(e.name).to.be.ok;",
+					"            });",
+					"        });",
+					"        pmOverride(\"RA6 - Number of mandatory name errors was coherent (\" + countNoName + \")\", function() {",
+					"            let countNoNameErrors = 0;",
+					"            jr.data.error.forEach(e => {",
+					"                if(e.error_msg.includes(\"insert: name are required\")) {",
+					"                    countNoNameErrors++;",
+					"                }",
+					"            });",
+					"            pm.expect(countNoName).to.be.equal(countNoNameErrors);",
+					"        });",
+					"        jr.da",
+					"    },",
+					"",
+					"    testUpdated: function(jr, fields, values) {",
+					"        pmOverride(\"RA7 - \" + fields + \" updated with \" + values, function() {",
+					"            jr.data.success.forEach(e => {",
+					"                for(let index = 0; index < fields.length; ++index) {",
+					"                    pm.expect(e[fields[index]]).to.be.equals(values[index]);",
+					"                }",
+					"            });",
+					"        });",
+					"    },",
+					"",
+					"    testIdentifierNotFound: function(jr, indexes) {",
+					"        pmOverride(\"RA8 - Error for wrong indentifier inserted\", function() {",
+					"            indexes.forEach(i => {",
+					"                pm.expect(jr.data.error[i].error_msg).to.be.equal(\"resource not found\");",
+					"            });",
+					"        });",
+					"    },",
+					"",
+					"/*    testDelete: function(jr) {",
+					"        pm.test(\"RA10 - Response flag delete = 1\", function() {",
+					"            jsonResponse.success.forEach(e => {",
+					"                ",
+					"            });",
+					"            pm.expect(jsonResponse.status).to.equal(204);",
+					"        });",
+					"    }, */",
+					"",
+					"    testDeleteSearch: function() {",
+					"        pmOverride(\"RA10 - Status code is 204 Not found\", function () {",
+					"            pm.response.to.have.status(204);",
+					"        });",
+					"    },",
+					"    testDeletedNot: function(jr, indexes) {",
+					"        indexes.forEach(i => {",
+					"            pmOverride(\"RA11 - Could not be linked because cancelled\", function () {",
+					"                pm.expect(jr.data.error[i].error_msg).to.include(\"not found in table \");",
+					"            });",
+					"        });",
+					"         ",
+					"    },",
+					"    testDeletedNotContent: function(jr, indexes) {",
+					"        indexes.forEach(i => {",
+					"            pmOverride(\"RA25 - Could not be linked because cancelled\", function () {",
+					"                pm.expect(jr.data.error[i].error_msg).to.include(\"content_id not valid\");",
+					"            });",
+					"        });",
+					"         ",
+					"    },",
+					"    testContentMandatory: function(jr,indexes) {",
+					"    //\"category\", \"type\", \"title\", \"uid\"",
+					"        pmOverride(\"RA12 - Content mandatory fields\", function () {",
+					"            if(jr.data.success === undefined) {",
+					"                var e = jr.data;",
+					"                pm.expect(e.category).to.be.ok;",
+					"                pm.expect(e.type).to.be.ok;",
+					"                pm.expect(e.title).to.be.ok;",
+					"                pm.expect(e.uid).to.be.ok;",
+					"                pm.expect(e.create_time).to.be.exist;",
+					"                pm.expect(e.update_time).to.be.exist;",
+					"                pm.expect(e.delete_time).to.be.exist;",
+					"                pm.expect(e.is_deleted).to.be.exist;",
+					"                pm.expect(e.identifier).to.be.ok;",
+					"                pm.expect(e.identifier).not.equal(\"not present\");",
+					"            }",
+					"            else {",
+					"                jr.data.success.forEach(e => {",
+					"                    pm.expect(e.category).to.be.ok;",
+					"                    pm.expect(e.type).to.be.ok;",
+					"                    pm.expect(e.title).to.be.ok;",
+					"                    pm.expect(e.uid).to.be.ok;",
+					"                    pm.expect(e.create_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.exist;",
+					"                    pm.expect(e.delete_time).to.be.exist;",
+					"                    pm.expect(e.is_deleted).to.be.exist;",
+					"                    pm.expect(e.identifier).to.be.ok;",
+					"                    pm.expect(e.identifier).not.equal(\"not present\");",
+					"                });",
+					"                if(indexes !== undefined) {",
+					"                    indexes.forEach(index => {",
+					"                        pm.expect(jr.data.error[index].error_msg).to.be.oneOf([\"/content::db->insert: uid are required\", \"/content::db->insert: title are required\", \"/content::db->insert: type are required\", \"/content::db->insert: category are required\"]);",
+					"                    });",
+					"                }",
+					"            }",
+					"        });",
+					"    },",
+					"",
+					"    testStatusOk: function() {",
+					"        let jsonResponse = pm.response.json();",
+					"",
+					"        pmOverride(\"Response should be a parsable JSON\", function() {",
+					"            pm.expect(jsonResponse).to.be.ok;",
+					"        });",
+					"",
+					"        pmOverride(\"Response body should be an object\", function() {",
+					"            pm.expect(jsonResponse).to.be.an('object');",
+					"        });",
+					"",
+					"        pmOverride(\"RA102 - Response code status is 0\", function() {",
+					"            pm.expect(jsonResponse.status).to.equal(0);",
+					"        });",
+					"    },",
+					"",
+					"    testResponse404: function(jr) {",
+					"        let jsonResponse = pm.response.json();",
+					"",
+					"        pmOverride(\"RA35 - Entity not found\", function() {",
+					"            pm.expect(jsonResponse.status).to.equal(404);",
+					"        });",
+					"",
+					"    },",
+					"    ",
+					"    testResponseObject: function(jr) {",
+					"        let jsonResponse = pm.response.json();",
+					"",
+					"        pmOverride(\"RA101 - Response should be a parsable JSON\", function() {",
+					"            pm.expect(jsonResponse.data.success).to.be.exist;",
+					"            pm.expect(jsonResponse.data.error).to.be.exist",
+					"        });",
+					"",
+					"    },",
+					"    testEnabledVisible: function(jr, request) {",
+					"        pmOverride(\"RA50 - Enable and Visible are correctly false\", function () {",
+					"            for(var i = 0; i < request.length; i++) {",
+					"                data = request[i];",
+					"                if(data.is_enabled === undefined) {",
+					"                    pm.expect(jr.data.success[i].is_enabled).to.be.true;",
+					"                }",
+					"                else {",
+					"                    pm.expect(data.is_enabled == jr.data.success[i].is_enabled).to.be.true;",
+					"                }",
+					"                if(data.is_visible === undefined) {",
+					"                    pm.expect(jr.data.success[i].is_visible).to.be.true;",
+					"                }",
+					"                else {",
+					"                    pm.expect(data.is_visible == jr.data.success[i].is_visible).to.be.true;",
+					"                }",
+					"            }",
+					"        });",
+					"    },",
+					"    testDate: function(jr, request) {",
+					"        pmOverride(\"RA55 - Date works correctly\", function () {",
+					"            for(var i = 0; i < request.length; i++) {",
+					"                data = request[i];",
+					"                if(data.date === undefined) {",
+					"                    pm.expect(jr.data.success[i].date).to.be.eq(0);",
+					"                    pm.expect(jr.data.success[i].day).to.be.eq(0);",
+					"                    pm.expect(jr.data.success[i].month).to.be.eq(0);",
+					"                    pm.expect(jr.data.success[i].year).to.be.eq(0);",
+					"                    pm.expect(jr.data.success[i].week).to.be.eq(0);",
+					"                    pm.expect(jr.data.success[i].timezone).to.be.eq(\"\");",
+					"                    pm.expect(jr.data.success[i].timezone_loc).to.be.eq(\"\");                    ",
+					"                }",
+					"                else {",
+					"                    pm.expect(jr.data.success[i].date).to.be.eq(1686650029, \"Mock date is not set\");",
+					"                    pm.expect(jr.data.success[i].day).to.be.eq(\"13\");",
+					"                    pm.expect(jr.data.success[i].month).to.be.eq(\"06\");",
+					"                    pm.expect(jr.data.success[i].year).to.be.eq(\"2023\");",
+					"                    pm.expect(jr.data.success[i].week).to.be.eq(\"24\");",
+					"                    pm.expect(jr.data.success[i].timezone).to.be.eq(\"+00:00\");",
+					"                    pm.expect(jr.data.success[i].timezone_loc).to.be.eq(\"UTC\");",
+					"                }",
+					"            }",
+					"        });",
+					"    },",
+					"    testLocale: function(jr, request) {",
+					"        pmOverride(\"RA60 - Locale works correctly\", function () {",
+					"            for(var i = 0; i < request.length; i++) {",
+					"                data = request[i];",
+					"                if(data.locale === undefined) {",
+					"                    pm.expect(jr.data.success[i].locale).to.be.eq(\"en-GB\");             ",
+					"                }",
+					"                else {",
+					"                    pm.expect(jr.data.success[i].locale).to.be.eq(data.locale);",
+					"                }",
+					"            }",
+					"        });",
+					"    }",
+					"    ",
+					"};",
+					"",
+					"raManagementItem = {",
+					"    testItemMandatory: function(jr) {",
+					"    //\"owner_id\", \"application_id\", \"identifier\", \"environment_id\", \"date\", \"day\", \"week\", \"month\", \"year\"",
+					"        pmOverride(\"RA20 - Item mandatory fields\", function () {",
+					"            jr.data.success.forEach(e => {",
+					"                pm.expect(e.identifier).to.be.ok;",
+					"                pm.expect(e.identifier).not.equal(\"not present\");",
+					"                pm.expect(e.environment_id).to.be.ok;",
+					"                pm.expect(e.date).to.be.exist;",
+					"                pm.expect(e.day).to.be.exist;",
+					"                pm.expect(e.week).to.be.exist;",
+					"                pm.expect(e.month).to.be.exist;",
+					"                pm.expect(e.year).to.be.exist;",
+					"                pm.expect(e.create_time).to.be.exist;",
+					"                pm.expect(e.update_time).to.be.exist;",
+					"                pm.expect(e.delete_time).to.be.exist;",
+					"                pm.expect(e.is_deleted).to.be.exist;",
+					"                pm.expect(e.owner_id).to.not.be.exist;",
+					"            });",
+					"        });",
+					"    },",
+					"    testSyncItemMandatory: function(jr) {",
+					"    //\"owner_id\", \"application_id\", \"identifier\", \"environment_id\", \"date\", \"day\", \"week\", \"month\", \"year\"",
+					"        pmOverride(\"RA21 - Sync Item mandatory fields\", function () {",
+					"             if(jr.error === \"\") {",
+					"                jr.data.inserted.forEach(e => {",
+					"                    pm.expect(e.identifier).to.be.ok;",
+					"                    pm.expect(e.identifier).not.equal(\"not present\");",
+					"                    pm.expect(e.date).to.be.exist;",
+					"                    pm.expect(e.day).to.be.exist;",
+					"                    pm.expect(e.week).to.be.exist;",
+					"                    pm.expect(e.month).to.be.exist;",
+					"                    pm.expect(e.year).to.be.exist;",
+					"                    pm.expect(e.create_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.exist;",
+					"                    pm.expect(e.delete_time).to.be.exist;",
+					"                    pm.expect(e.is_deleted).to.be.exist;",
+					"                });",
+					"             } else {",
+					"                pm.expect(jr.error).to.be.oneOf([\"last_app_sync is required\", \"category is required\", \"data is not a valid array\", \"last_app_sync is not a valid timestamp\"]);",
+					"            }",
+					"        });",
+					"    },",
+					"    testSyncItemResponse: function(jr) {",
+					"    //\"owner_id\", \"application_id\", \"identifier\", \"environment_id\", \"date\", \"day\", \"week\", \"month\", \"year\"",
+					"        pmOverride(\"RA151 - Sync Item has a valid response\", function () {",
+					"            if(jr.error === \"\") {",
+					"                pm.expect(jr.data.inserted).to.be.an('array');",
+					"                pm.expect(jr.data.updated).to.be.an('array');",
+					"                pm.expect(jr.data.deleted).to.be.an('array');",
+					"                pm.expect(jr.data.conflicts).to.be.an('object');",
+					"            }",
+					"        });",
+					"    },",
+					"    testSyncItemResponseArray: function(jr, array_name) {",
+					"    //\"owner_id\", \"application_id\", \"identifier\", \"environment_id\", \"date\", \"day\", \"week\", \"month\", \"year\"",
+					"        pmOverride(\"RA154 - Sync Item response is valued\", function () {",
+					"            if(array_name == \"inserted\") {",
+					"                pm.expect(jr.data.inserted.length).gt(0);",
+					"            }",
+					"            if(array_name == \"updated\") {",
+					"                pm.expect(jr.data.updated.length).gt(0);",
+					"            }",
+					"            if(array_name == \"deleted\") {",
+					"                pm.expect(jr.data.deleted.length).gt(0);",
+					"            }",
+					"        });",
+					"    },",
+					"    testSyncItemErrors: function(jr) {",
+					"        pmOverride(\"RA152 - Sync Item errors expected\", function () {",
+					"        if(jr.status == 0 && jr.data.errors.length > 0 ) {",
+					"                jr.data.errors.forEach(e => {",
+					"                    pm.expect(e.error.message).to.be.oneOf([\"local_identifier is required\", \"duplicate\", \"/item::db->insert: owner_id, category are required\"]);",
+					"                });",
+					"             } else {",
+					"",
+					"            }",
+					"        });",
+					"    },",
+					"    testSyncConflicts: function(jr) {",
+					"        pmOverride(\"RA153 - Sync Conflicts errors expected\", function () {",
+					"        let conflicts = Object.values(jr.data.conflicts);",
+					"        if(jr.status == 0 && conflicts.length > 0 ) {",
+					"            conflicts.forEach(e => {",
+					"                pm.expect( e.server-data).to.be.exist;",
+					"                pm.expect( e.client-data).to.be.exist;",
+					"            });",
+					"        } ",
+					"        });",
+					"    },",
+					"    testUpdate: function(jr) {",
+					"        pmOverride(\"RA22 - Update is correct\", function () {",
+					"            if(jr.data.success) {",
+					"                jr.data.success.forEach(e => {",
+					"                    pm.expect(e.create_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.gte(e.create_time);",
+					"                    pm.expect(e.local_identifier).to.be.exist;",
+					"                    pm.expect(e.version).to.be.gte(1);",
+					"                });",
+					"            }",
+					"            if(jr.data.inserted) {",
+					"                jr.data.inserted.forEach(e => {",
+					"                    pm.expect(e.create_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.exist;",
+					"                    pm.expect(e.update_time).to.be.gte(e.create_time);",
+					"                });",
+					"            }",
+					"        });",
+					"    }",
+					"",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HC-PHR-004",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-005",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-006",
+			"value": "RA12, RA20, RA21",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-007",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-008",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-009",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-010",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-011",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-020",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-024",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-025",
+			"value": "RA22",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-026",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-027",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-050",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-051",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-055",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-060",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-065",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-070",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-075",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-080",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-081",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "HC-PHR-090",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

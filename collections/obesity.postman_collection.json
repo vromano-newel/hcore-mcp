@@ -1,0 +1,3285 @@
+{
+	"info": {
+		"_postman_id": "727b72f7-ffae-4012-b7f9-885627556ad7",
+		"name": "projects.obesity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8555105",
+		"_collection_link": "https://hcoreapp.postman.co/workspace/Hcore~e6e4f384-2a03-401d-a43a-8ac073d11a12/collection/4359626-727b72f7-ffae-4012-b7f9-885627556ad7?action=share&source=collection_link&creator=8555105"
+	},
+	"item": [
+		{
+			"name": "app",
+			"item": [
+				{
+					"name": "intervention",
+					"item": [
+						{
+							"name": "/obesity/intervention/plan/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "movement",
+											"value": "{\"stationary_time\":\"from_four_to_seven_hours\",\"movement_time\":\"move_a_little\",\"limitations\":[\"cardiovascular\"],\"active_days\":\"3_4_days\",\"weight\":70.5,\"activities\":[\"brisk_walking\",\"slow_walking\",\"light_pilates\",\"moderate_swimming\",\"light_cross_training\"]}",
+											"description": "    {\n        \"stationary_time\": required [string], // \"less_four_hours\" | \"from_four_to_seven_hours\" | \"from_eight_to_ten_hours\" | \"more_than_ten_hours\"\n        // \"During a typical day, how much time do you spend sitting or being mostly inactive (for example, working at a desk, watching TV, driving, or using your phone)?\"\n        \n        \"movement_time\": required [string], // \"mostly_seated\" | \"move_a_little\" | \"move_regularly\" | \"move_much\"\n        // \"In your daily routines (like at home, work, or running errands), how often do you find yourself moving around — for example, standing, walking short distances, or doing light chores?\"\n        \n        \"limitations\": optional [string[]], // [\"cardiovascular\", \"orthopedic\", \"gastrointestinal\"]\n        \n        \"active_days\": required [string], // \"never\" | \"1_2_days\" | \"3_4_days\" | \"5_more_days\"\n        // \"How often do you intentionally move your body in a way that raises your breathing or heart rate — such as walking, climbing stairs, household chores, or other physical activities you choose to do?\"\n        \n        \"weight\": required [float] // Peso corporeo in kg\n        \n        \"activities\": optional [string[]] // [\"brisk_walking\", \"slow_walking\", \"light_pilates\", \"light_toning_gym\", \"moderate_cycling\", \"slow_swimming\", \"moderate_swimming\", \"moderate_weight_lifting\", \"light_yoga\", \"slow_cycling\", \"light_cross_training\", \"light_fitness_class\"]\n        // \"Which types of activities from this list sound most enjoyable or realistic for you right now?\"\n    }",
+											"type": "text"
+										},
+										{
+											"key": "diet",
+											"value": "{\"regimen\":\"omnivorous\",\"glycemia\":true,\"intestine\":\"combined\",\"protein_free\":false,\"lactose_free\":false,\"gluten_free\":false,\"calories_deficit\":\"moderate\",\"sex\":\"male\",\"age\":35,\"weight\":95.5,\"height\":175}",
+											"description": "    {\n        \"regimen\": required [string], // \"omnivorous\" | \"vegetarian\"\n        \"glycemia\": required [bool]\n        \"intestine\": required [string], // \"none\" | \"combined\" | \"constipation\" | \"gastritis\"\n        \"protein_free\": required [bool]\n        \"lactose_free\": required [bool]\n        \"gluten_free\": required [bool]\n        \n        \"calories_deficit\": required [string], // \"slowly\" | \"moderate\" | \"fast\" | \"idontknow\"\n        // \"How quickly would you like to lose weight?\"\n        // - \"slowly\": -10% calorie deficit (0.5 kg/week)\n        // - \"moderate\": -20% calorie deficit (1 kg/week)\n        // - \"fast\": -25% calorie deficit (1.25 kg/week)\n        // - \"idontknow\": -15% calorie deficit (default moderate approach)\n        \n        \"sex\": required [string], // \"male\" | \"female\"\n        // User's biological sex for metabolic calculations\n        \n        \"age\": required [int], // Age in years\n        // Used for BMR and TDEE calculations\n        \n        \"weight\": required [float], // Weight in kg\n        // Current body weight for BMI, BMR, and TDEE calculations\n        \n        \"height\": required [float] // Height in cm\n        // Used for BMI calculation and diet personalization\n    }",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/plan/create",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"plan",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/intervention/plan/status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/plan/status?start_date=12344&end_date=",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"plan",
+										"status"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "12344"
+										},
+										{
+											"key": "end_date",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/intervention/plan/activities",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "movement",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "diet",
+											"value": "{\"regimen\":\"omnivorous\",\"glycemia\":true,\"intestine\":\"combined\",\"protein_free\":false,\"lactose_free\":false,\"gluten_free\":false,\"calories_deficit\":\"moderate\",\"sex\":\"male\",\"age\":35,\"weight\":95.5,\"height\":175}",
+											"description": "    {\n        \"regimen\": required [string], // \"omnivorous\" | \"vegetarian\"\n        \"glycemia\": required [bool]\n        \"intestine\": required [string], // \"none\" | \"combined\" | \"constipation\" | \"gastritis\"\n        \"protein_free\": required [bool]\n        \"lactose_free\": required [bool]\n        \"gluten_free\": required [bool]\n        \n        \"calories_deficit\": required [string], // \"slowly\" | \"moderate\" | \"fast\" | \"idontknow\"\n        // \"How quickly would you like to lose weight?\"\n        // - \"slowly\": -10% calorie deficit (0.5 kg/week)\n        // - \"moderate\": -20% calorie deficit (1 kg/week)\n        // - \"fast\": -25% calorie deficit (1.25 kg/week)\n        // - \"idontknow\": -15% calorie deficit (default moderate approach)\n        \n        \"sex\": required [string], // \"male\" | \"female\"\n        // User's biological sex for metabolic calculations\n        \n        \"age\": required [int], // Age in years\n        // Used for BMR and TDEE calculations\n        \n        \"weight\": required [float], // Weight in kg\n        // Current body weight for BMI, BMR, and TDEE calculations\n        \n        \"height\": required [float] // Height in cm\n        // Used for BMI calculation and diet personalization\n    }",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/plan/activities",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"plan",
+										"activities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/intervention/learning/dump",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/learning/dump",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"learning",
+										"dump"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/intervention/template/refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "movement",
+											"value": "",
+											"description": "    {\n        \"stationary_time\": required [string], // \"less_four_hours\" | \"from_four_to_seven_hours\" | \"from_eight_to_ten_hours\" | \"more_than_ten_hours\"\n        // \"During a typical day, how much time do you spend sitting or being mostly inactive (for example, working at a desk, watching TV, driving, or using your phone)?\"\n        \n        \"movement_time\": required [string], // \"mostly_seated\" | \"move_a_little\" | \"move_regularly\" | \"move_much\"\n        // \"In your daily routines (like at home, work, or running errands), how often do you find yourself moving around — for example, standing, walking short distances, or doing light chores?\"\n        \n        \"limitations\": optional [string[]], // [\"cardiovascular\", \"orthopedic\", \"gastrointestinal\"]\n        \n        \"active_days\": required [string], // \"never\" | \"1_2_days\" | \"3_4_days\" | \"5_more_days\"\n        // \"How often do you intentionally move your body in a way that raises your breathing or heart rate — such as walking, climbing stairs, household chores, or other physical activities you choose to do?\"\n        \n        \"weight\": required [float] // Peso corporeo in kg\n        \n        \"activities\": optional [string[]] // [\"brisk_walking\", \"slow_walking\", \"light_pilates\", \"light_toning_gym\", \"moderate_cycling\", \"slow_swimming\", \"moderate_swimming\", \"moderate_weight_lifting\", \"light_yoga\", \"slow_cycling\", \"light_cross_training\", \"light_fitness_class\"]\n        // \"Which types of activities from this list sound most enjoyable or realistic for you right now?\"\n    }",
+											"type": "text"
+										},
+										{
+											"key": "diet",
+											"value": "{\"regimen\":\"omnivorous\",\"glycemia\":true,\"intestine\":\"combined\",\"protein_free\":false,\"lactose_free\":false,\"gluten_free\":false,\"calories_deficit\":\"moderate\",\"sex\":\"male\",\"age\":35,\"weight\":95.5,\"height\":175}",
+											"description": "    {\n        \"regimen\": required [string], // \"omnivorous\" | \"vegetarian\"\n        \"glycemia\": required [bool]\n        \"intestine\": required [string], // \"none\" | \"combined\" | \"constipation\" | \"gastritis\"\n        \"protein_free\": required [bool]\n        \"lactose_free\": required [bool]\n        \"gluten_free\": required [bool]\n        \n        \"calories_deficit\": required [string], // \"slowly\" | \"moderate\" | \"fast\" | \"idontknow\"\n        // \"How quickly would you like to lose weight?\"\n        // - \"slowly\": -10% calorie deficit (0.5 kg/week)\n        // - \"moderate\": -20% calorie deficit (1 kg/week)\n        // - \"fast\": -25% calorie deficit (1.25 kg/week)\n        // - \"idontknow\": -15% calorie deficit (default moderate approach)\n        \n        \"sex\": required [string], // \"male\" | \"female\"\n        // User's biological sex for metabolic calculations\n        \n        \"age\": required [int], // Age in years\n        // Used for BMR and TDEE calculations\n        \n        \"weight\": required [float], // Weight in kg\n        // Current body weight for BMI, BMR, and TDEE calculations\n        \n        \"height\": required [float] // Height in cm\n        // Used for BMI calculation and diet personalization\n    }",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/template/refresh",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"template",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/intervention/plan/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/intervention/plan/delete?delete_content=1",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"intervention",
+										"plan",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "delete_content",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "plan",
+					"item": [
+						{
+							"name": "/obesity/plan/diet/outcome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/plan/diet/outcome?week=1&day=1&meal=lunch&ingredients=pasta_di_spelt&status=completed",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"plan",
+										"diet",
+										"outcome"
+									],
+									"query": [
+										{
+											"key": "week",
+											"value": "1"
+										},
+										{
+											"key": "day",
+											"value": "1"
+										},
+										{
+											"key": "meal",
+											"value": "lunch"
+										},
+										{
+											"key": "ingredients",
+											"value": "pasta_di_spelt"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/plan/movement/outcome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/plan/movement/outcome?week=1&day=1&activity=brisk_walking&status=completed",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"plan",
+										"movement",
+										"outcome"
+									],
+									"query": [
+										{
+											"key": "week",
+											"value": "1"
+										},
+										{
+											"key": "day",
+											"value": "1"
+										},
+										{
+											"key": "activity",
+											"value": "brisk_walking"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/obesity/plan/learning/outcome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"if(jsonResponse.status == 0) {\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "TimeZone",
+										"value": "Europe/Rome",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_app}}{{api_path}}/obesity/plan/learning/outcome?week=1&day=1&code=1.1&status=completed",
+									"host": [
+										"{{host_app}}{{api_path}}"
+									],
+									"path": [
+										"obesity",
+										"plan",
+										"learning",
+										"outcome"
+									],
+									"query": [
+										{
+											"key": "week",
+											"value": "1"
+										},
+										{
+											"key": "day",
+											"value": "1"
+										},
+										{
+											"key": "code",
+											"value": "1.1"
+										},
+										{
+											"key": "status",
+											"value": "completed"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "quasar.middleware",
+			"item": [
+				{
+					"name": "pascal",
+					"item": [
+						{
+							"name": "amicomed/pascal/register_patient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"data\": {\r\n\"lang\": \"it\"\r\n}\r\n}"
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/register_patient",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"register_patient"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/personal_target",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"data\": {\r\n    \"dbp\": 80,\r\n    \"sbp\": 120\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/personal_target",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"personal_target"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/register_measurements",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"data\": {\r\n    \"measurements\": [\r\n      {\r\n        \"af\": 0,\r\n        \"condition\": 0,\r\n        \"date\": 20211206103607,\r\n        \"dbp\": 80,\r\n        \"force\": true,\r\n        \"gmt\": \"+01:30\",\r\n        \"hr\": 80,\r\n        \"latitude\": 40.68,\r\n        \"longitude\": 14.77,\r\n        \"note\": \"Comments\",\r\n        \"rawId\": 0,\r\n        \"remoteId\": 0,\r\n        \"sbp\": 120,\r\n        \"source\": \"AmicoMed\",\r\n        \"stringLen\": 0\r\n      }\r\n    ]\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/register_measurements",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"register_measurements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/remove_last_measurement",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/remove_last_measurement",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"remove_last_measurement"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/score_by_dates",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "from",
+											"value": "20230101093006",
+											"type": "text"
+										},
+										{
+											"key": "threshold",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "to",
+											"value": "20230131093006",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/score_by_dates",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"score_by_dates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/fetch_progress",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/fetch_progress",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"fetch_progress"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/sync_measurements",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/sync_measurements?action=read_all&id=-1&limit=-1",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"sync_measurements"
+									],
+									"query": [
+										{
+											"key": "action",
+											"value": "read_all",
+											"description": "read|get_updates|read_all"
+										},
+										{
+											"key": "id",
+											"value": "-1"
+										},
+										{
+											"key": "rawid",
+											"value": "-1",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/pascal/personal_target",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/personal_target",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"personal_target"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "medical",
+					"item": [
+						{
+							"name": "amicomed/medical/flag",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/flag?target={{patient_uuid}}",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"flag"
+									],
+									"query": [
+										{
+											"key": "target",
+											"value": "{{patient_uuid}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/medical/latest_measurements",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "target",
+											"value": "amicomed-group-patients-ffe837e4-0aa3-41fa-8865-ab42eac0b868",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "GROUP_CODE",
+											"description": "UUIDS|GROUP_CODE",
+											"type": "text"
+										},
+										{
+											"key": "lastDays",
+											"value": "30",
+											"type": "text"
+										},
+										{
+											"key": "start",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "length",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "order",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/latest_measurements",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"latest_measurements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/medical/last_measurement",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/last_measurement?target={{patient_uuid}}",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"last_measurement"
+									],
+									"query": [
+										{
+											"key": "target",
+											"value": "{{patient_uuid}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/medical/atrial_fibrillation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/atrial_fibrillation?target={{patient_uuid}}&lastDays=30",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"atrial_fibrillation"
+									],
+									"query": [
+										{
+											"key": "target",
+											"value": "{{patient_uuid}}"
+										},
+										{
+											"key": "lastDays",
+											"value": "30"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/amicomed/medical/taken_care/create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"});\r",
+											"if(jsonResponse.status == 0) {\r",
+											"    pm.environment.set(\"identifier\", jsonResponse.data.identifier);\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "patient",
+											"value": "{{patient_uuid}}",
+											"type": "text"
+										},
+										{
+											"key": "date",
+											"value": "{{$timestamp}}",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "duration",
+											"value": "1814400",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "{{$randomNoun}}",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "priority",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/taken_care/create",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"taken_care",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/amicomed/medical/taken_care/search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "search[username]",
+											"value": "{{tmp-username}}",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "search[email]",
+											"value": "{{tmp-email}}",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "draw",
+											"value": "1",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "length",
+											"value": "10",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "order[email]",
+											"value": "desc",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/taken_care/search",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"taken_care",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/amicomed/medical/taken_care/delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/taken_care/delete",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"taken_care",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/amicomed/medical/aggregate_stats",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 0\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(0);\r",
+											"}); \r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "dateFrom",
+											"value": "20230101093006",
+											"type": "text"
+										},
+										{
+											"key": "dateTo",
+											"value": "20230201093006",
+											"type": "text"
+										},
+										{
+											"key": "filter",
+											"value": "{\"sbp\": {\"gte\": 100}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/medical/aggregate_stats",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"medical",
+										"aggregate_stats"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "system",
+					"item": [
+						{
+							"name": "amicomed/system/user/export",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uuid",
+											"value": "16dc8cc0-b6e8-408d-940b-9ee8285777fd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/system/user/export",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"system",
+										"user",
+										"export"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/system/user/lazy/list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "from",
+											"value": "2020-01-01",
+											"type": "text"
+										},
+										{
+											"key": "threshold",
+											"value": "1000",
+											"type": "text"
+										},
+										{
+											"key": "timeband",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "to",
+											"value": "2023-01-01",
+											"type": "text"
+										},
+										{
+											"key": "uuids[]",
+											"value": "dd4e7063-a2db-4b09-8960-1db6aca22d0a",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/system/user/lazy/list",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"system",
+										"user",
+										"lazy",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/system/user/search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "search[from][gte]",
+											"value": "2020-01-01 09:00:00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/system/user/search",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"system",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "amicomed/system/user/erase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{physician_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "uuid",
+											"value": "{{$randomUUID}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/system/user/erase",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"system",
+										"user",
+										"erase"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Broken",
+					"item": [
+						{
+							"name": "amicomed/pascal/score_by_days",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let jsonResponse = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Response should be a parsable JSON\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.ok;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be an object\", function() {\r",
+											"    pm.expect(jsonResponse).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response body should be in the correct format\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.data).to.be.a('object');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response code status is 200\", function() {\r",
+											"\r",
+											"    pm.expect(jsonResponse.status).to.equal(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{patient_userToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "days",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "threshold",
+											"value": "3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host_pascal}}{{api_path}}/amicomed/pascal/score_by_days",
+									"host": [
+										"{{host_pascal}}{{api_path}}"
+									],
+									"path": [
+										"amicomed",
+										"pascal",
+										"score_by_days"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "quasar",
+			"item": [
+				{
+					"name": "RegisterPatient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{quasar_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host_quasar}}/rest/pascal/registerPatient?lang=it",
+							"host": [
+								"{{host_quasar}}"
+							],
+							"path": [
+								"rest",
+								"pascal",
+								"registerPatient"
+							],
+							"query": [
+								{
+									"key": "lang",
+									"value": "it"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Response should be a parsable JSON\", function() {",
+									"    pm.expect(jsonResponse).to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response body should be an object\", function() {",
+									"    pm.expect(jsonResponse).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Response body should be in the correct format\", function() {",
+									"    pm.expect(jsonResponse.data).to.be.a('object');",
+									"});",
+									"",
+									"",
+									"pm.environment.set(\"session\", jsonResponse.data.session);",
+									"pm.environment.set(\"pat_id\", jsonResponse.data.Patid);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\":{{username}},\n    \"pass\":{{password}},\n    \"canale\":{{channel}},\n    \"versioneClient\":{{version}},\n    \"lang\": \"it\",\n    \"UDID\": \"5C462AFB-B606-4801-89E3-8BD6BC000389\",\n    \"appBundleID\": {{bundle_id}},\n    \"appVersion\": {{version}},\n    \"currentCulture\": \"it_IT\"\n}"
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/login",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Personal Target",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{quasar_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"sbp\": 120,\n        \"dbp\": 80\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{quasar_api}}/pascal/personalTarget",
+							"host": [
+								"{{host_quasar}}{{quasar_api}}"
+							],
+							"path": [
+								"pascal",
+								"personalTarget"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Personal Target",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const dateNow= new Date();",
+									"pm.environment.set('current_timestamp', dateNow.getTime());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{quasar_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{quasar_api}}/pascal/fetchProgress",
+							"host": [
+								"{{host_quasar}}{{quasar_api}}"
+							],
+							"path": [
+								"pascal",
+								"fetchProgress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Measurements",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const dateNow= new Date();var out = `${normalize(dateNow.getUTCFullYear())}${normalize(dateNow.getMonth()+1)}${normalize(dateNow.getUTCDate())}${normalize(dateNow.getHours())}${normalize(dateNow.getMinutes())}${normalize(dateNow.getSeconds())}`;pm.environment.set('timestamp', out);function normalize(number) {if(number < 10) number = `0${number}`;return number;}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{quasar_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"measurements\": [\n            {\n                \"condition\": \"0\",\n                \"af\": 0,\n                \"hr\": 80,\n                \"force\": false,\n                \"gmt\": 1,\n                \"latitude\": 40.68560028076172,\n                \"longitude\": 14.77669715881348,\n                \"note\": \"\",\n                \"sbp\": 80,\n                \"dbp\": 120,\n                \"rawId\": 0,\n                \"remoteId\": 0,\n                \"source\": \"AmicoMed\",\n                \"stringLen\": 0,\n                \"date\": \"{{timestamp}}\"\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{quasar_api}}/pascal/registerMeasurements",
+							"host": [
+								"{{host_quasar}}{{quasar_api}}"
+							],
+							"path": [
+								"pascal",
+								"registerMeasurements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Progress",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const dateNow= new Date();",
+									"pm.environment.set('current_timestamp', dateNow.getTime());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{quasar_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/fetchProgress?uuid={{uuid}}",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"fetchProgress"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{uuid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Last Measurement",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const dateNow= new Date();",
+									"pm.environment.set('current_timestamp', dateNow.getTime());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{quasar_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uuid\":\"{{uuid}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/removeLastMeasurement",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"removeLastMeasurement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync Measurements (read)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/syncMeasurements?uuid={{uuid}}&action=read&id={{measeure_to_sync_1}}",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"syncMeasurements"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{uuid}}"
+								},
+								{
+									"key": "action",
+									"value": "read"
+								},
+								{
+									"key": "id",
+									"value": "{{measeure_to_sync_1}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sync Measurements (get updates)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();",
+									"",
+									"pm.test(\"Response should be a parsable JSON\", function() {",
+									"    pm.expect(jsonResponse).to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Response body should be an object\", function() {",
+									"    pm.expect(jsonResponse).to.be.an('object');",
+									"});",
+									"",
+									"pm.test(\"Response body should be in the correct format\", function() {",
+									"    pm.expect(jsonResponse.data).to.be.a('object');",
+									"});",
+									"",
+									"_.each(jsonResponse.data.measeure_to_sync, (element, index) => ",
+									"    pm.environment.set(`measeure_to_sync_${index + 1}`, element)",
+									")",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-KEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/syncMeasurements?uuid={{uuid}}&action=get_updates&rawid=0",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"syncMeasurements"
+							],
+							"query": [
+								{
+									"key": "uuid",
+									"value": "{{uuid}}"
+								},
+								{
+									"key": "action",
+									"value": "get_updates"
+								},
+								{
+									"key": "rawid",
+									"value": "0",
+									"description": "ID of last measure inserted or 0 for sync all measures"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Push Notification Token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(pm.environment.get(\"current_time_zone\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-API-KEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"CurrentTimeZone\": \"{{current_time_zone}}\",\n    \"Device\": \"{{device}}\",\n    \"OS\": \"{{os}}\",\n    \"UDID\": \"5C462AFB-B606-4801-89E3-8BD6BC000389\",\n    \"appBundleID\": \"{{bundle_id}}\",\n    \"appVersion\": \"{{version}}\",\n    \"build\": {{build}},\n    \"canale\": \"{{channel}}\",\n    \"configVersion\": {{config_version}},\n    \"currentCulture\": \"it_IT\",\n    \"lang\": \"it\",\n    \"notificationToken\": \"<bc579063 e8f62e85 4ecbcb71 8b4fbb6b 419a386a 3f092a59 80105318 27206fd3>\",\n    \"versioneClient\": \"{{version}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{api_path}}/pascal/registerPushNotificationToken",
+							"host": [
+								"{{host_quasar}}{{api_path}}"
+							],
+							"path": [
+								"pascal",
+								"registerPushNotificationToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Flag",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJwYXNjYWwtYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOm51bGwsImlzcyI6ImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwiYXVkIjpbImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwicGFzY2FsLWFtaWNvbWVkLWhjb3JlLWFwcCJdLCJpYXQiOjE2OTU3NDMyMTYsImV4cCI6MTY5NTc0NjgxNiwic2NvcGVzIjpbInBhc2NhbCIsInBhc2NhbFwvKiIsInNoYXJlXC9yZXEiXX0.f-H0yhswpqNqXPxXN8U7ntQwmZHV7PvaP-eZjeXuyB8:eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJwaHlzaWNpYW4tYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOiI1ZDllNWVlMC1iNjBmLTQzZmUtODE4OC1mZWU5MGUzZTU2MDkiLCJpc3MiOiJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsImF1ZCI6WyJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsInBoci1hbWljb21lZC1oY29yZS1hcHAiXSwiaWF0IjoxNjk1NzQzMDQyLCJleHAiOjE2OTU3NDY2NDIsInNjb3BlcyI6WyJ1c2VyIiwiZ3JvdXAiLCJjb3Vwb24iLCJzaGFyZVwvcmVxIiwidGFrZW5fY2FyZSIsIml0ZW1cL3IiLCJjb250ZW50XC9yIiwibm90aWZpZXJcLyoiLCJwYXNjYWxcLyoiLCJjb25zZW50Il19.EuRg1-4aWK1opWp2XuSHv9kMGrJTZ_lgl4cueGSwR4U",
+								"type": "text"
+							},
+							{
+								"key": "target",
+								"value": "d5a04e3a-b83d-4ec3-9b37-fe6984ce75d4",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"uuids\": [\r\n      \"d5a04e3a-b83d-4ec3-9b37-fe6984ce75d4\"\r\n    ]\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{host_quasar}}{{quasar_api}}/medical/flag",
+							"host": [
+								"{{host_quasar}}{{quasar_api}}"
+							],
+							"path": [
+								"medical",
+								"flag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "System Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_quasar}}{{quasar_api}}/system/user/search?search[from][gte]=20100131093006&search[to][lte]=20230131093006&search[fo][eq]=1",
+							"host": [
+								"{{host_quasar}}{{quasar_api}}"
+							],
+							"path": [
+								"system",
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "search[from][gte]",
+									"value": "20100131093006"
+								},
+								{
+									"key": "search[to][lte]",
+									"value": "20230131093006"
+								},
+								{
+									"key": "search[fo][eq]",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "System Search Local",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/system/user/search?search[from][gte]=20100131093006&search[to][lte]=20230131093006&search[fo][eq]=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"system",
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "search[from][gte]",
+									"value": "20100131093006"
+								},
+								{
+									"key": "search[to][lte]",
+									"value": "20230131093006"
+								},
+								{
+									"key": "search[fo][eq]",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User export",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"from\": \"20200101093006\",\r\n    \"to\": \"20240131093006\",\r\n    \"valid\": true,\r\n    \"uuid\": \"16dc8cc0-b6e8-408d-940b-9ee8285777fd\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{host_pascal}}/manager/system/user/export",
+							"host": [
+								"{{host_pascal}}"
+							],
+							"path": [
+								"manager",
+								"system",
+								"user",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User erase",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin-apiKey}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"from\": \"20200101093006\",\r\n    \"to\": \"20240131093006\",\r\n    \"valid\": true,\r\n    \"uuid\": \"485a7a1d-0fcd-497c-8c62-817c50005b54\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{host_pascal}}/manager/system/user/erase",
+							"host": [
+								"{{host_pascal}}"
+							],
+							"path": [
+								"manager",
+								"system",
+								"user",
+								"erase"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "programs",
+			"item": [
+				{
+					"name": "/diet/search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response should be a parsable JSON\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.ok;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should be an object\", function() {\r",
+									"    pm.expect(jsonResponse).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response code status is 0\", function() {\r",
+									"    pm.expect(jsonResponse.status).to.equal(0);\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{physician_userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "regimen",
+									"value": "omnivorous",
+									"type": "text"
+								},
+								{
+									"key": "glycemia",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "season",
+									"value": "winter",
+									"type": "text"
+								},
+								{
+									"key": "intestine",
+									"value": "combined",
+									"type": "text"
+								},
+								{
+									"key": "lang",
+									"value": "it",
+									"type": "text"
+								},
+								{
+									"key": "geo",
+									"value": "eu",
+									"type": "text"
+								},
+								{
+									"key": "protein_free",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "lactose_free",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "gluten_free",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "calories[$gte]",
+									"value": "1800",
+									"type": "text"
+								},
+								{
+									"key": "calories[$lte]",
+									"value": "1900",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host_programs}}{{api_path}}/pjbuilder/diet/search",
+							"host": [
+								"{{host_programs}}{{api_path}}"
+							],
+							"path": [
+								"pjbuilder",
+								"diet",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "content",
+			"item": [
+				{
+					"name": "/template/search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_content}}{{api_path}}/survey/template/search",
+							"host": [
+								"{{host_content}}{{api_path}}"
+							],
+							"path": [
+								"survey",
+								"template",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/template/search Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_content}}{{api_path}}/survey/section/cc51506d-cd02-4485-9dd7-b91c1e423678/save",
+							"host": [
+								"{{host_content}}{{api_path}}"
+							],
+							"path": [
+								"survey",
+								"section",
+								"cc51506d-cd02-4485-9dd7-b91c1e423678",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/template/search Copy 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{patient_userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host_content}}{{api_path}}/survey/template/search",
+							"host": [
+								"{{host_content}}{{api_path}}"
+							],
+							"path": [
+								"survey",
+								"template",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "temp",
+			"item": [
+				{
+					"name": "Direct latest_measurements",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJwYXNjYWwtYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOm51bGwsImlzcyI6ImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwiYXVkIjpbImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwicGFzY2FsLWFtaWNvbWVkLWhjb3JlLWFwcCIsImF1dGgtZGV2LWFtaWNvbWVkLWNvbSJdLCJpYXQiOjE2OTk5NTg1NTAsImV4cCI6MTY5OTk2MjE1MCwic2NvcGVzIjpbInBhc2NhbCIsInBhc2NhbFwvKiIsInNoYXJlXC9yZXEiLCJ1c2VyXC9maWx0ZXIiXX0.mKJivjxo0sh7YCLf4XSH3DKC9_mDboTL_qub7Ye7YnU:eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJhcHAtYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOiJlYWVmMzFkYy0xMDJkLTQwZGItOWY0OS0yOTI2YmIxMjY4OTYiLCJpc3MiOiJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsImF1ZCI6WyJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsInBoci1hbWljb21lZC1oY29yZS1hcHAiLCJhdXRoLWRldi1hbWljb21lZC1jb20iLCJwaHItZGV2LWFtaWNvbWVkLWNvbSJdLCJpYXQiOjE2OTk5NTg1NDcsImV4cCI6MTY5OTk2MjE0Nywic2NvcGVzIjpbInVzZXIiLCJpdGVtXC9yIiwiY29udGVudFwvciIsInBhc2NhbFwvKiJdfQ.AcjJer9Gcg6uv2xS8yCRRCr1CYvokzmtmj-bI68vyd8",
+								"type": "text"
+							},
+							{
+								"key": "Target",
+								"value": "FAKE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"filter\": {\r\n      \"sbp\": {\r\n        \"gte\": 100\r\n      }\r\n    },\r\n    \"lastDays\": 30,\r\n    \"length\": 30,\r\n    \"order\": {\r\n      \"sbp\": \"DESC\"\r\n    },\r\n    \"target\": \"amicomed-group-patients-ffe837e4-0aa3-41fa-8865-ab42eac0b868\",\r\n    \"type\": \"GROUP_CODE\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://pascal-amicomed.hcore.app/manager/rest/medical/latest_measurements",
+							"protocol": "https",
+							"host": [
+								"pascal-amicomed",
+								"hcore",
+								"app"
+							],
+							"path": [
+								"manager",
+								"rest",
+								"medical",
+								"latest_measurements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Direct score by days",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJwYXNjYWwtYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOm51bGwsImlzcyI6ImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwiYXVkIjpbImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwicGFzY2FsLWFtaWNvbWVkLWhjb3JlLWFwcCIsImF1dGgtZGV2LWFtaWNvbWVkLWNvbSIsInBhc2NhbC1kZXYtYW1pY29tZWQtY29tIl0sImlhdCI6MTcwMDY0OTk4MiwiZXhwIjoxNzAwNjUzNTgyLCJzY29wZXMiOlsicGFzY2FsIiwicGFzY2FsXC8qIiwic2hhcmVcL3JlcSIsInVzZXJcL2ZpbHRlciJdfQ.3RC7_3ydtR0KtcHXqBe38BLyDL8r-4RuJqhQad7RBz4:eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJhcHAtYW1pY29tZWQtaGNvcmUtYXBwIiwiZG9tYWluIjoiYW1pY29tZWQiLCJzdWIiOiIyMDJhYTYxOC0zYWZkLTRmOTQtYTAzNy05Njc4MzNjMTIxMzAiLCJpc3MiOiJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsImF1ZCI6WyJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsImNvbnRlbnQtYW1pY29tZWQtaGNvcmUtYXBwIiwicGhyLWFtaWNvbWVkLWhjb3JlLWFwcCIsInByb2dyYW1zLWFtaWNvbWVkLWhjb3JlLWFwcCIsInBhc2NhbC1hbWljb21lZC1oY29yZS1hcHAiLCJhZGhlcmVuY2UtYW1pY29tZWQtaGNvcmUtYXBwIiwiYXV0aC1kZXYtYW1pY29tZWQtY29tIiwiY29udGVudC1kZXYtYW1pY29tZWQtY29tIiwiYWRoZXJlbmNlLWRldi1hbWljb21lZC1jb20iLCJwaHItZGV2LWFtaWNvbWVkLWNvbSIsInByb2dyYW1zLWRldi1hbWljb21lZC1jb20iLCJwYXNjYWwtZGV2LWFtaWNvbWVkLWNvbSJdLCJpYXQiOjE3MDA2NDk1MjMsImV4cCI6MTcwMDY1MzEyMywic2NvcGVzIjpbImRldmljZSIsInVzZXIiLCJwcm9ncmFtXC9yIiwicHJvZ3JhbVwvdyIsImNtc1wvciIsImNvbnRlbnRcL3IiLCJpdGVtXC9yIiwiaXRlbVwvdyIsInBhc2NhbCIsInN1cnZleSIsInRoZXJhcHlcL3IiLCJ0aGVyYXB5XC93IiwiaW50YWtlXC9yIiwiaW50YWtlXC93IiwibWVkaWNhdGlvblwvciJdfQ.DfqDIp6Hb4EnGLSyRtRvnxFmh9lkHVw6_R3ycM4tDxU",
+								"type": "text"
+							},
+							{
+								"key": "Target",
+								"value": "FAKE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requests\": [\r\n        {\r\n            \"days\": \"10\",\r\n            \"threshold\": \"3\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://pascal-amicomed.hcore.app/manager/rest/pascal/scoreByDays",
+							"protocol": "https",
+							"host": [
+								"pascal-amicomed",
+								"hcore",
+								"app"
+							],
+							"path": [
+								"manager",
+								"rest",
+								"pascal",
+								"scoreByDays"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dev Register patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJwYXNjYWwtZGV2LWFtaWNvbWVkLWNvbSIsImRvbWFpbiI6ImRldiIsInN1YiI6bnVsbCwiaXNzIjoiYXV0aC1kZXYtYW1pY29tZWQtY29tIiwiYXVkIjpbImF1dGgtYW1pY29tZWQtaGNvcmUtYXBwIiwiYXV0aC1kZXYtYW1pY29tZWQtY29tIl0sImlhdCI6MTcwMDY2MzQyMiwiZXhwIjoxNzAwNjY3MDIyLCJzY29wZXMiOlsicGFzY2FsXC8qIiwic2hhcmVcL3JlcSJdfQ.D5gVsE1tOqr6AkB0_FHnadsFIOb6jNhTCSk0SuirvXI:eyJ0eXAiOiJKV1QiLCJhbGciOiJzaGEyNTYifQ.eyJjbGllbnRfaWQiOiJhcHAtZGV2LWFtaWNvbWVkLWNvbSIsImRvbWFpbiI6ImRldiIsInN1YiI6ImUxNDg1NDAwLWFmYjYtNGUyYi05ZGM4LTgyOTM5NDg0ZTEzZCIsImlzcyI6ImF1dGgtZGV2LWFtaWNvbWVkLWNvbSIsImF1ZCI6WyJhdXRoLWFtaWNvbWVkLWhjb3JlLWFwcCIsImNvbnRlbnQtYW1pY29tZWQtaGNvcmUtYXBwIiwicGhyLWFtaWNvbWVkLWhjb3JlLWFwcCIsInByb2dyYW1zLWFtaWNvbWVkLWhjb3JlLWFwcCIsInBhc2NhbC1hbWljb21lZC1oY29yZS1hcHAiLCJhdXRoLWRldi1hbWljb21lZC1jb20iLCJjb250ZW50LWRldi1hbWljb21lZC1jb20iLCJwaHItZGV2LWFtaWNvbWVkLWNvbSIsInByb2dyYW1zLWRldi1hbWljb21lZC1jb20iLCJwYXNjYWwtZGV2LWFtaWNvbWVkLWNvbSJdLCJpYXQiOjE3MDA2NjM0MTYsImV4cCI6MTcwMDY2NzAxNiwic2NvcGVzIjpbImRldmljZSIsInVzZXIiLCJwcm9ncmFtXC9yIiwicHJvZ3JhbVwvdyIsImNtc1wvciIsImNvbnRlbnRcL3IiLCJpdGVtXC9yIiwiaXRlbVwvdyIsInBhc2NhbCIsInN1cnZleSJdfQ.ZapJRMeAolOiNNxy2t54htdDTeP4IBs0eR3kNdvVd_E",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"lang\": \"it\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://pascal-dev.amicomed.com/manager/rest/pascal/registerPatient",
+							"protocol": "https",
+							"host": [
+								"pascal-dev",
+								"amicomed",
+								"com"
+							],
+							"path": [
+								"manager",
+								"rest",
+								"pascal",
+								"registerPatient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
