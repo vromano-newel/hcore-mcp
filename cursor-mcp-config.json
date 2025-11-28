@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "hcore-mcp": {
+      "command": "node",
+      "args": [
+        "/path/to/hcore/src/server.js"
+      ],
+      "env": {
+        "POSTMAN_ENVIRONMENT_FILE": "/path/to/hcore/nwl.obesity.stage.postman_environment.json",
+        "PHR_PATH": "/path/to/hcore/collections/phr.postman_collection.json",
+        "AUTH_PATH": "/path/to/hcore/collections/auth.postman_collection.json",
+        "ADHERENCE_PATH": "/path/to/hcore/collections/adherence.postman_collection.json",
+        "CONTENT_PATH": "/path/to/hcore/collections/content.postman_collection.json",
+        "OBESITY_PATH": "/path/to/hcore/collections/obesity.postman_collection.json",
+        "PJBUILDER_PATH": "/path/to/hcore/collections/pjbuilder.postman_collection.json"
+      }
+    }
+  }
+}
+
